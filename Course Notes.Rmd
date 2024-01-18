@@ -1,0 +1,119 @@
+---
+title: "CIND 123 Course Notes"
+author: "Andy Yuan"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+# Week 1: Jan 11 - Jan 18, 2024
+## Module 1: Introduction to Statistics and the R environment
+
+### Introduction to Statistics
+Statistics is the study of how best to collect, analyze, and draw conclusions from data.
+
+**There are three concepts that we will want to keep in mind:**
+
+1. Statistics is an applied field with a wide range of practical applications
+2. Statistics will help us learn from real and interesting data
+3. Statistics help advance our understanding of the world and ourselves
+
+One basic idea in stats is the use of samples: Samples are pulled from a population, where a population is the entire set.
+
+**This branches off into techniques to present the data:**
+
+- Descriptive statistics:
+  - Makes a conclusion based off of the entire population
+  - Describes sets of measurements we can take on the population
+  
+- Inferential statistics:
+  - Uses a sample to generalize about the population
+  - Important that the sample can represent the population
+  
+### Variables and Data
+Variables are a characteristic that changes over time, like hair or jewelry that varies from person to person. An experimental unit is a set where the variable can be measured.
+
+**Data is individual pieces of information, so data is a set of qualitative and quantitative variables.** 
+
+- Univariate data: when a single variable is measured on a single experimental unit
+- Bivariate data: two variables are measured on a single experimental unit
+- Multivariate data: more than two variables are measured on a single experimental unit
+
+Eg, 50 students (experimental unit) who get their test scores (variable) measured
+
+**Data is further divided into two groups: qualitative and quantitative**
+
+- Quantitative data: Can be measured and assigned a number
+  - How long someone's hair is
+- Qualitative data: Can be observed but not measured
+  - What colour someone's hair is
+  
+### Introduction to R
+R is a software for statistical computing and graphics. It can do calculations, manipulate data, program, and create graphics. There is a slew of statistical tools available on R as well as web packages for easy use. 
+
+
+## Swirl Lessons 1-3
+R does not use the equal symbol to assign variables, but instead uses <-. If thought of as an arrow, then the right side value is being assigned to the left side variable. 
+
+Let's look at an example:
+```{r}
+x <- 5+7
+y <- x-3
+y
+```
+
+A vector in R is a small collection of numbers, and a data structure is an object that contains data.In R, we use the concatenate function to combine numbers into vectors.This function goes like "c(x, y, z)"
+
+We can try assigning a few numbers to a vector here:
+```{r}
+z <- c(1.1, 9, 3.14)
+z
+```
+
+You can even assign a vector inside of a vector as so:
+```{r}
+c(z, 4, z)
+```
+
+Just like a vector in linear algebra, multiplying a vector in R will give you each item multiplied by the number. You are also able to add to it.
+
+```{r}
+z + 100
+```
+
+However, you are also able to use the sqrt function with vectors, which will give you the square root of each of the numbers within the vector.You are also able to divide a vector by a vector, which will give you the first element of the first vector divided by the first element of the second vector, then the second element of the first vector divided by the second element of the second vector, and so on.
+
+If one vector is shorter than another, then it recycles itself until it fits with the longer vector. 
+
+**If you ever get confused on what a function does, then you can use the '?' symbol with the function following, though this will open up the page in your web browser, which may not be the desired action, so I will not include it here.**
+
+Sequences of numbers in R are similar to Python, where you use the colon between the numbers to signify this number to another. The default is increments of 1 that can go backwards, through decimals, or anything in between.
+
+```{r}
+1.1:-10
+```
+
+You can also establish more control over the sequencing by using the seq() function. 
+
+```{r}
+seq(1, 10, by=0.5)
+seq(5,10, length=30)
+```
+
+The second sequence automatically sets an interval so that we can get 30 items between 5 and 10 inclusive.
+
+If you wanted a sequence the same length as another, you can use the **seq_along()** function or the **seq(along.with = desired sequence)**.
+
+R can also replicate a sequence of numbers using the **rep()** function:
+```{r}
+rep(0, times = 10)
+rep(c(1, 2, 3), times = 40)
+rep(seq(5,10, by=0.7), times = 2)
+rep(c(0,1,2), each = 10)
+```
+
+## Readings for Week 1
+### Intro stats with R, chapter 1.1
+**1.1.5 Graphics**
+
+(plot) is the function for plotting out two sets of data
+- Can add other variables such as "pch", will will change the plotting character
