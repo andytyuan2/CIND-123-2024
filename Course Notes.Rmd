@@ -61,7 +61,7 @@ y <- x-3
 y
 ```
 
-A vector in R is a small collection of numbers, and a data structure is an object that contains data.In R, we use the concatenate function to combine numbers into vectors.This function goes like "c(x, y, z)"
+A vector in R is a small collection of numbers, and a data structure is an object that contains data.In R, we use the concatenate function to combine numbers into vectors.This function goes like "c(x, y, z...)"
 
 We can try assigning a few numbers to a vector here:
 ```{r}
@@ -117,3 +117,520 @@ rep(c(0,1,2), each = 10)
 
 (plot) is the function for plotting out two sets of data
 - Can add other variables such as "pch", will will change the plotting character
+
+
+## Lab for Week 1
+Download the bp.obese package in ISwR dataset:
+
+Install the ISwR package by using:
+
+```{r}
+library(ISwR)
+```
+
+
+After that, load the package "bp.obese" using the data() function and then preview using the head() function:
+```{r}
+data(bp.obese)
+head(bp.obese)
+```
+
+To summarize the structure of the dataset, use summary() function,
+To get an overview of the dataset, use the str() function
+
+```{r}
+summary(bp.obese)
+str(bp.obese)
+```
+
+Use the help() function to check the names and descriptions of the other example datasets in the ISwR package.
+
+## Removing variable assignments
+We can remove the assignments of variables from previous chunks of R code using the rm() function
+```{r}
+rm(list = ls())
+```
+The above code removes the assignments of code that we previously used and allows us to start fresh for the next lesson.
+
+# Week 2: Jan 18 - Jan 25, 2024
+## Module 2: Assignments and Vectors in R
+
+### Assignments and vectors in R
+When you are assigning variables, you can actually have the assignment the other way, but will have to change the direction of the arrow. The assignment will always point from assigned value to variable.
+
+Similarly, you can create assignments of vectors in R, where you are also able to find things like length and and elements. Elements in R start from 1, not 0 like in Python
+
+```{r}
+x <- c(10, 20, 30, 40)
+length(x)
+x[2]
+```
+R has a handy function where you are also able to take out an element of a vector by assigning a new variable the old vector with a minus sign saying you want to get rid of the numbered element:
+```{r}
+y <- x[-3]
+y
+```
+
+Vectors cannot be mixed, as in they cannot be both numeric and verbal:
+```{r}
+z <- c(2, "word", 3)
+z
+rm(list = ls())
+```
+
+### Data Types in R
+
+You can test for data types in R using the **class()** function or **is."data type"()** function. Let's go through the types of data in R.
+
+**1. Numeric Data**
+
+  - Any numeric value is assumed to be a numeric data type as soon as it is assigned. 
+  - Similar to the float number type in Python
+  - Integers must first be assigned as integers to be used as one
+```{r}
+z <- 10
+x <- as.integer(10)
+class(z)
+class(x)
+```
+
+**2. Character Data**
+
+  - Any value that is not a number
+  - Should use quotation marks to denote
+  - R is case sensitive
+```{r}
+character <- "data"
+class(character)
+```
+
+**The factor() command**
+- Used to examine unique values of a factor variable
+```{r}
+y <- factor("data")
+y
+```
+
+**3. Date Data**
+
+  - as.date() will store your date as a date data type
+  - should use quotation marks again here
+  - You can change the order of the date by specifying as you are assigning the date
+  - R will always go Year, Month, Day
+```{r}
+date1 <- as.Date("2012/05/03", "%Y/%d/%m")
+date1
+```
+
+**4. Logical Data Type**
+
+  - Since 1 is true and 0 is false, then any operations done to them will result in either 1 times X or 0 times X
+  - You are also able to assign variables as true or false, which will give it a logical class
+  - like in Python, "==" is equal to, while "!=" is not equal to
+  
+```{r}
+TRUE * 5
+FALSE * 5
+rm(list = ls())
+```
+
+### Matrices in R
+We use matrices in R to perform operations similar to uses in linear algebra. As always, the matrix is ROW x COLUMN when saying it. We make sure that when creating a matrix, then we are able to first define the numbers within it, then the dimensions that they fit in. 
+
+```{r}
+x <- 1:12
+dim(x) <- c(3, 4)
+# dim(x) is not a variable, but instead defining what dimensions x has
+x
+```
+This operation will give a matrix that has the numbers from 1 to 12, with 3 rows and 4 columns. A couple things to note are that R starts in the top left, will progress its way down the first column, then start again at the top of the next column until it finishes its course. By default, R writes matrices column by column.
+
+To call a row of x, you just need the row number and a blank for the column number. This same logic is applied to the columns. Of course, if you do specify, then you can pull a specific cell in the matrix
+```{r}
+x[1,]
+x[,3]
+```
+
+The fascinating and useful tool that R has is that it can also alter how it writes matrices. Particularly, it can write them row by row if you use the **byrow** command. It works by using either T(True) or F(False)
+
+Furthermore, R can also fill in the blanks for you when you are making matrices. If you specify the number of rows you want, then it will be able to fill in the number of columns; it can also do this the other way around.
+```{r}
+matrix(c(1, 6, 2, 5, 3, 4), nrow = 3, byrow = T)
+matrix(1:12, ncol = 6)
+matrix(5:14, ncol = 5, byrow = T)
+```
+
+There are a few commands in R that are very useful for building out matrices.
+
+  - The **cbind** command will bind vectors together column-wise.
+  - The **rbind** command will bind vectors together row-wise.
+  
+```{r}
+cbind(A=1:4,B=5:8,C=9:12)
+rbind(A=1:4, B=5:8, C=9:12)
+```
+
+Another useful function of matrices is being able to extract out a specific row or column, just like how we did for vectors.
+```{r}
+m <- matrix(1:12, nrow = 4)
+m
+m[1,3] # this specifies an element in the matrix
+m[-2,] # this will take out the second row
+rm(list = ls())
+```
+
+## Swirl Lessons 4-8
+### Lesson 4: Vectors
+Two vector types in R for storing data:
+
+- Atomic vectors: contains only one data type
+- Lists: Can contain multiple data types
+
+
+Vector types for storing specific data:
+
+- Logical vectors: Contain values TRUE, FALSE, and NA
+  - TRUE = 1, FALSE = 0, NA is 'Not Available'
+  - '|' is the symbol for 'or'
+  - '&' is the symbol for 'and'
+  
+- Character Vectors: contains strings that are set by double quotations
+  - We can combine the words in a character vector using the paste() function, and make sure to include the collapse = " " after the vector so it gets inserted between the vector elements being combined
+  - We can also just combine two strings using the sep = " " command to ensure there is a space between the two
+  - If we combine two vectors with no spaces in between using the paste function, then they'll cycle within each other
+
+```{r}
+paste(c(1:3), c("X", "Y", "Z"), sep = "")
+paste(LETTERS, 1:4, sep = "-")
+```
+
+### Lesson 5: Missing Values
+- Missing values are NA, and should be studied to find the underlying reason they exist in our data
+```{r}
+x <- c(44, NA, 5, NA)
+```
+- We can draw from the normal distribution by using the **rnorm()** function, which you specify how many draws
+  - Randomize the draws by using the **sample()** function, which takes a random sample of the vectors you specify, and how large the sample should be
+  
+- Another type of missing value is "NaN", which stands for "not a number"
+  - For example, things like 0/0 is NaN, or Inf-Inf
+  
+### Lesson 6: Subsetting vectors
+- Subsetting vectors is indexing what you want out of the vector
+  - They come in 4 types:
+    - Logical Vectors
+    - Vectors of positive integers
+    - vectors of negative integers
+    - vectors of character strings
+- You can index by stating a condition: x[x > 0] will give you all elements greater than 0 in the x vector
+  - Conditions can be combined using the and (&) or OR commands
+- We can use "!" with is.na() to get the non NA elements of a vector
+  - We have to get rid of the NA by assigning to another vector first. If not, then since NA > 0 or NA < 0 will be true, then you will have NA in your original vector values
+
+- We can also subset all BUT some elements by using the negative notation
+  - x[c(-2, -10)] will give you all BUT number 2 and 10
+  
+- Another thing we can do is name vectors
+  - Normally, this is done through writing the name = the value
+  - We can also write the names after the fact by using the names() function, then assigning the names using a character vector
+```{r}
+vector_name <- c(11, 2, NA)
+names(vector_name) <- c("wow", "NOOO", "borf")
+vector_name
+rm(list = ls())
+```
+
+### Lesson 7: matrices and data frames
+- matrices are only one type of data, data frames can be more than one type of data
+- If you want to name the columns of a matrix, you need to make it a data frame with the **data.frame()** function
+
+To make column names, you use the **colnames()** function, which takes the data frame and you can assign it to the column names vector created
+
+### Lesson 8: logic in R
+<, >, <=, >=, ==, !=
+- There are two AND operators in R, the main being '&' and the other being '&&'
+  - '&' can evaluate across a vector, while '&&' only evaluates the first member of a vector
+```{r}
+TRUE & c(TRUE, FALSE, FALSE)
+# TRUE && c(TRUE, FALSE, FALSE)
+```
+  - Similarly, the OR operator, '|' can evaluate across a vector, while the double OR, '||', evaluates only the first element in the vector
+  
+- All **AND** operators are evaluated before any **OR** operators, while any value operators happen before any AND or OR operators
+
+Some ways of evaluating the logical of the statements you write are the **isTRUE()** function and the **isFALSE()** function. Similarly, you can evaluate the sameness of vectors or functions using the **identical()** function.
+  - The **xor()** function evaluates an exclusive OR. If one argument is TRUE and the other FALSE, then the whole function will return TRUE. Even when both are TRUE, then the function will return FALSE
+  - The **which()** function evaluates the indices of a logical vector to give you the ones that are TRUE
+  - The **any()** function will give you TRUE if one or more elements is TRUE
+  - The **all()** function will give you TRUE only if all elements are TRUE
+
+## Module 2 readings: 1.2 - R language Essentials
+
+1. Expressions and Objects
+  - Expressions always return a value, sometimes a side effect like a graph or writing to a file
+  - Expressions work on objects in R; Objects are anything that can be assigned to a variable in R
+
+2. Functions and arguments  
+  - Things like functions have *actual arguments* and *formal arguments*
+    - **Actual arguments** will only apply to the current call in use
+      - These can be specified but are also typically assumed in most R functions
+    - **Formal arguments** will be used in connection to actual arguments in the call
+```{r}
+height <- c(1:4)
+weight <- c(4:1)
+plot(weight, height, pch = 2) #Assumes weight is x axis and height is y axis, this is called positional matching. pch is a named formal argument that can specify what it does, this is called keyword matching. 
+```
+
+  - You can check what a function has for arguments by using the args() command.
+```{r}
+args(plot.default)
+```
+
+
+3. Vectors
+  - Character vectors
+  - Logical vectors
+
+4. Quoting and escape sequences 
+ - When you write a character vector, you use the quotation marks to differentiate the string to R
+    - To be able to print the strings out without the quotation marks, you can use the **cat()** function
+  
+```{r}
+cat(c("wow", "he", "michael"))
+```
+There is no way to tell this vector from a single string of "wow he michael"
+ 
+ - Escape sequences are useful because it tells R that you would like to start a new line
+    - Example include "\n", inserting quotations in a string like \"
+```{r}
+cat("What is \"R\"?\n")
+```
+
+5. Missing values
+  - Vectors can carry an N/A value to specify a missing value
+  
+6. Functions carry vectors
+  - **c()** function carries a vector by concatenating them; ie, joining them end to end
+      - Elements of the concatenate vector must be the same type of data, and will be converted where R sees fit
+      - You can also assign names to the elements, which modifies how they are printed
+```{r}
+colours <- c(red="aka", blue="ao", green="midori")
+names(colours)
+```
+
+  - Another type of concatenate function is the **seq()** function, which makes a sequence of numbers from one specified one to another. You can also specify how much you want to jump between the numbers in the sequence. This is particularly useful for larger sets of numbers that would take too long to use the c() function
+  
+```{r}
+seq(10, 20, 2) # sequence from 10 to 20, taking steps of size 2
+```
+
+  - The third type of vector creating function is the **rep()** function. It is used to generate repeated values based the second argument, which can be either a vector or single number
+  
+```{r}
+vector <- c(7, 9 ,13)
+rep(vector, 3) # a single number will repeat the vector in its entirety x times
+rep(vector, 2:4) # a vector will specify how many times each element in the vector should be repeated. In this case, the first is repeated twice, the second three times, and the third four times
+```
+This function is particularly useful when you need a data set that repeats the same value more than once
+```{r}
+# a set of 10 men and 15 women will be as follows
+rep(c("men", "women"), c(10, 15))
+```
+
+
+7. Matrices and arrays
+  - Useful functions:
+      - **rownames()** - Gives the row names
+      - **colnames()** - Gives the column names
+      - **t()** - Transposes the matrix
+      
+8. Factors
+  - Factors are categorical variables usually assigned a numeric code. They assign meaningful names to categories.
+  - Each factor has levels which are specified to represent a certain number
+  
+```{r}
+pain <- c(0, 3, 2, 3, 1) # data of pain levels of patients
+fpain <- factor(pain, levels = 0:3) # setting the pain levels as a categorical variable and assigning level numbers
+levels(fpain) <- c("none", "mild", "moderate", "severe") # assigning meaning to the level numbers
+fpain # shows the levels in terms of the assigned meanings
+as.numeric(fpain) # changes the levels to start from 1
+```
+
+
+9. Lists
+  - The **list()** function is used to combine a collection of objects into one. Each component can be named as well, so it will be neater to show more data sets at once.
+  
+```{r}
+intake.pre <- c(5260,5470,5640,6180,6390,
+                6515,6805,7515,7515,8230,8770)
+intake.post <- c(3910,4220,3885,5160,5645,4680,5265,5975,6790,6900,7335)
+
+mylist <- list(before=intake.pre, after=intake.post)
+mylist # shows both parts of the list
+mylist$before # will show the specified portion, using the $ sign as the defining character for which part
+```
+
+
+10. Data frames
+   - A list of vectors and other factors of the same length, similar to a spreadsheet and its multiple columns
+   - Similar to lists, the specific component may be accessed using the $ sign
+```{r}
+d <- data.frame(intake.pre, intake.post) # this data is paired, so the rows are the same person
+d
+```
+
+11. Indexing
+  - You can access a specific part of a vector like in python using the square brackets
+  - You can also change that specific element by assigning it a new value
+  - You can specify multiple instances using a vector instead of a single number, but NOT the set of numbers without the c() function
+  
+```{r}
+wow <- c(12:1)
+wow[c(3, 5, 7)]
+```
+
+12. Conditional Selection
+  - You would need to extract based off some criteria most of the time
+  - The criteria needs to be the same length as the desired set you are taking from, kind of like vlookups with Excel
+```{r}
+intake.post[intake.pre > 7000]
+```
+
+  - Some logical operators are:
+    - "&" for and
+    - "|" for or
+    - "!" for not
+  - Useful functions include:
+    - **is.na()** will show elements are recorded as missing or N/A
+    
+13. Indexing of data frames
+  - uses the row by column format like matrices, so a specific element would look like **data.frame[1, 2]**, while the row would be **data.frame[1, ]**
+  - Can also use conditional selection to extract
+```{r}
+d[d$intake.pre > 7000, ] # shows all rows where intake.pre is higher than 7000
+```
+
+14. Grouped data and data frames
+  - For some datasets, you are able to categorize them, so it is easier to store them in sets rather than in the same place
+  
+```{r}
+expend <- c(1, 4, 2, 5, 1, 9, 3, 4)
+stature <- c("obese", "lean", "obese", "lean", "obese", "lean", "obese", "lean")
+energy <- data.frame(expend, stature)
+energy
+
+exp.lean <- energy$expend[energy$stature == "lean"] # separates expenditure into lean body type
+exp.obese <- energy$expend[energy$stature == "obese"] # separates expenditure into obese body type
+```
+
+You can also split a data set according to some grouping
+```{r}
+one <- split(energy$expend, energy$stature) # splits expend by the grouping in stature
+```
+
+15. Implicit loops
+  - Used to apply a function to each element of a vector
+  - Useful functions in this space:
+      - **lapply()** - always returns a list 
+      - **sapply()** - always tries to simplify the result to a vector or matrix if possible
+      - **tapply()** - creates a table using the sets you specify, groups by second argument
+      
+```{r}
+lapply(mylist, mean, na.rm=T) # specifies what it wants to apply the function to, specifies the function, na.rm=T is ensuring any N/A values are removed
+
+sapply(mylist, mean, na.rm=T) # does the same as lapply, but will use a vector to show in this case
+
+tapply(energy$expend, energy$stature, median)
+```
+
+
+16. Sorting 
+  - Sorting a vector uses the **sort()** function to sort it from smallest to largest
+  - ordering a vector according to another uses the **order()** function
+  
+```{r}
+order(intake.post) # Gives numbers 1 to 11 (length of the vector), sorted by the size of the argument
+# other variables can be sorted by this same criterion. This is the strength of the order() function
+rm(list = ls())
+```
+
+
+## Lab 2
+1. Using the c() and sum() functions
+```{r}
+FireName <- c("Waskesiu CFB", "Birch Bay", "Waskesiu CFB", "Wasstrom's Flats", "Millard", "Rabbit", "Sandy North", "Namekus Lake", "Waskesiu CFB", "Millard", "National", "Wasstrom's Guards", "South End Meadows")
+
+BurnedArea <- c(40, 0.1, NA, 834, 1483, 20228, NA, 1.2, 56, 693, 0.5, 30, 830)
+
+sum(BurnedArea, na.rm = T)/(length(BurnedArea) - sum(is.na(BurnedArea)))
+```
+
+2. Using the cbind() function
+```{r}
+Year <- c(rep(2019, 2), rep(2018, 6), rep(2017, 4), 2016)
+Year <- factor(Year, ordered = TRUE) # this makes it an ordinal variable
+Year
+Fires <- cbind(Year, FireName, BurnedArea)
+# the limitation of the cbind() function is that it converts all the variables to the same type
+
+Fires[1,2] # first row, second column
+dim(Fires) # 13 rows by 3 columns
+nrow(Fires) # number of rows in the data
+```
+
+
+3. Working with Matrices
+```{r}
+iMatrix <- matrix(c(1,2,3,4,2,1,2,3,0), nrow = 3, byrow=T)
+```
+  - Use R to compute the following:
+    - Transpose of the matrix
+```{r}
+transpose <- t(iMatrix)
+```
+    - inverse of the matrix
+```{r}
+inverse <- solve(iMatrix)
+inverse
+```
+    - multiplication of the matrix by its inverse
+```{r}
+inverse %*% iMatrix # %*% is the notation for matrix multiplication
+rm(list = ls())
+```
+
+# Week 3: Jan 25 - Feb 1, 2024
+## Module 3: Graphs, lists, arrays, and data frames in R
+
+### Graphs for categorical data
+After data has been collected, we typically ask of two things to use as analysis: what values have been measured, and how often has each value been accrued? 
+
+When the data is qualitative or categorical, then the table we can create from the data is a list of categories. The oftenness of the variable can be the frequency, the relative frequency, and the percentage of measurements.
+  - Frequency is just the number of times the variable occurs
+  - Relative frequency is the number of times the variable occurs in a category
+  - Percentage of measurements is the percentage, so the relative frequency * 100
+  
+Types of charts vary based on how you want to show your data
+  - Bar Chart
+```{r}
+rating <- c("A", "B", "C", "D")
+Frequency_of_rating <- c(35, 260, 93, 12)
+barplot.default(height = Frequency_of_rating, names.arg = rating)
+```
+
+  - Pie Chart, needs to be made into a percentage
+```{r}
+percentages_pie <- sapply(Frequency_of_rating, function(n) (n/sum(Frequency_of_rating))*360)
+pie(percentages_pie, labels = rating)
+```
+
+### Graphs for quantitative data
+Graphs for quantitative data include line charts, dot plots, stem and leaf plots, and relative frequency histograms.
+
+When a quantitative variable is recorded over time, the most efficient way of displaying the data is with a line chart
+```{r}
+years <- seq(2006, 2031, by = 5)
+Population <- c(1227.3, 1513.1, 1942.1, 2184.7, 2466.6, 2527.6)
+datas <- data.frame(years, Population)
+
+```
