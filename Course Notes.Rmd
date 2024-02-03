@@ -631,6 +631,71 @@ When a quantitative variable is recorded over time, the most efficient way of di
 ```{r}
 years <- seq(2006, 2031, by = 5)
 Population <- c(1227.3, 1513.1, 1942.1, 2184.7, 2466.6, 2527.6)
-datas <- data.frame(years, Population)
-
+plot(years, Population, type = "l")
 ```
+
+
+For a dot plot, you want to stack the data points on top of each other on the number line which represents the range of the data
+```{r}
+data_dot <- c(1,2,3,5,2,1,2,4,5,1,5,2,2,5,6,7,3,3,5,2,3)
+stripchart(data_dot, method = "stack", pch = )
+```
+
+And finally, for a stem and leaf plot, you want to have the tens column as the stem and the ones column as the leaf. It will represent a frequency distribution.
+```{r}
+data_stem <- c(11, 12, 13, 14, 20, 30, 32, 34, 33, 21, 17)
+stem(data_stem)
+```
+
+Lastly, you use a histogram to show frequency.
+```{r}
+hist(data_dot)
+rm(list = ls())
+```
+
+
+### Arrays, lists, and data frames in R
+#### Arrays
+Arrays are three-dimensional matrices, where the first two dimensions will be rows and columns, while the third dimension tells you the number of matrices attached to the array.
+```{r}
+firstterm <- matrix(c(76, 61, 80, 70, 65, 90), nrow = 3)
+secondterm <- matrix(c(86, 71, 90, 83, 65, 90), nrow = 3)
+tests <- array(data= c(firstterm, secondterm), dim = c(3,2,2))
+tests
+```
+Arrays have indexing exactly the same as matrices, but you will need to specify from which matrix you want to pull the specified rows and columns from.
+
+
+#### Lists
+Lists are a generalization of arrays, which can contain different data types, and are called using the '$' sign. 
+```{r}
+x <- list(u=2, v="abc")
+x
+x$u
+```
+
+#### Data frames
+data frames are actually lists, but each component of the list is a vector corresponding to a column. They are the best way to store data.
+
+```{r}
+data_frames = data.frame(name=c("Ann", "Bo", "Carl", "Dee"), gender=c("F","M","M", "F"), height=c(150, 140, 170, 130), weight = c(140, 160, 140, 160))
+data_frames
+# The way to subset and call out the data frame is to use the '$' sign to call the specific vector, then subset using the square bracket to get within the vector itself. 
+data_frames$gender[3]
+# You are also able to get the rows and columns as normal using the square brackets
+data_frames[3, 2]
+
+# Also, you can subset the data with some conditions
+subset(data_frames, data_frames$gender == "F")
+subset(data_frames, height > 140)
+rm(list = ls())
+```
+
+
+## Swirl Lesson 15: Base Graphics
+
+
+# Week 4: Feb 1 - Feb 8, 2024
+## Module 4: Measures of univariate, bivariate data; functions of R
+
+### Describing data with numerical measures
