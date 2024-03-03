@@ -2,7 +2,9 @@
 title: "CIND 123 Course Notes"
 author: "Andy Yuan"
 date: "`r Sys.Date()`"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 # Week 1: Jan 11 - Jan 18, 2024
@@ -699,3 +701,645 @@ rm(list = ls())
 ## Module 4: Measures of univariate, bivariate data; functions of R
 
 ### Describing data with numerical measures
+Numerical measures can be precise and provide a concrete way to look at a data set.
+
+There are various things that can be considered. 
+
+1. Mean (x bar)
+  - sum of the data set / number of items
+  - More easily affected by large or small values than the median
+$$
+E[X] = \sum(X_i) / N
+$$
+2. Median (x squiggly)
+  - Put the data set in order, then find the middle of the data set. If even, then take the average of the two middle values.
+3. Mode 
+  - The most common number of the data set, there can be more than one mode, so we do not use averages here 
+4. Variance
+  - Variance is the sum((xi - e(x))^2) / N for population, but n-1 for samples
+  - It can also be calculated by expected values:
+$$
+V[X] = E[X^2] - E[X]^2
+$$
+5. Standard Deviation 
+  - Always positive 
+  
+### Numerical measures in data part 2
+
+#### Tchebysheff's Theorem
+- For a number k that is greater than or equal to 1, at least $$ 1- 1/(k^2) $$ percent of measurements will lie within 'k' standard deviations of the mean. Same concept as the normal distribution percentage ranges for numbers of standard deviations from the mean.
+
+Eg, for a number k = 2, then the percent of measurements that will lie within 2 standard deviations from the mean is 1-1/4 = 75% of measurements.
+
+  - The empirical rule is the same concept, but has exact measurements
+    - 68% of measurements within 1 standard deviation
+    - 95% within 2 standard deviations
+    - 99.7% within 3 standard deviations
+    
+    
+#### The z-score
+A way to find how far a data point is from the mean, described in terms of standard deviations
+$$ z-score = \frac{x - E[X]}{\sigma} $$
+A larger z-score denotes a higher possibility that the data point is an outlier in the data set since it is further away from the mean.
+
+#### Percentiles
+Percentile shows the number of measurements above and below a certain data point
+  - Q1: first quartile - first 25% 
+  - Q2: second quartile, also called the median, 50%
+  - Q3: third quartile - first 75%
+  - Interquartile: middle 50% of the data set, Q3 - Q1
+  
+#### Box plots
+The parts to a box plot are as follows:
+  - The box is made up of Q1 and Q3 as the outer edges, the median in between, then the whiskers extend to 1.5x of the interquartile range from each quartile.
+  
+### numerical measures for quantitative bivariate data
+Bivariate data is for when two variables are measured on a single experimental unit
+  - It's easy to make a scatterplot on bivariate data since one can be on the x axis and the other on the y axis
+  
+  
+### Functions in R
+- Functions are objects in R, and are assigned to variables the same as other functions
+- They have their own class, 'function'
+
+```{r}
+f <- function(a) {
+  a^2
+}
+f(2)
+```
+
+```{r}
+series <- function(x, y) {
+  z1 <- 2*x + y
+  z2 <- 5*x - y
+  z3 <- x + 5*y
+  return(c(z1, z2, z3))
+}
+
+series(2, 3)
+```
+
+#### variance function in R
+```{r}
+library(ISwR)
+attach(thuesen)
+var(thuesen$blood.glucose) # variance function in R
+sd(thuesen$blood.glucose) # standard deviation function in R
+scale(thuesen$blood.glucose, center = TRUE, scale = TRUE) # Z scores of the data, the bit at the end is the mean and the standard deviation
+summary(thuesen$blood.glucose) # the six summary numbers (Minimum, Q1, median, mean, Q3, Max)
+```
+
+
+## Reading Chapter 2-3 of Beaver stats textbook
+### Chapter 2: Data with numerical measures
+#### Measures of centre
+Modal classes are the group of the highest frequency from a continuous variable. The midpoint of which is considered the mode
+
+#### Measures of variability
+- Range
+- Variance of a sample vs population
+- Standard deviation
+
+#### Practical significance of standard deviation
+- Tchebysheff's theorem
+- Empirical rule
+
+If the range of a data set consists of 4 standard deviation (2 coming out from each side of the mean), then you can say that the range is approximately equal to 4s
+
+$$R = 4s$$$$s = R/4$$
+Which should be the same order as the actual calculated standard deviation
+
+#### Measures of relative standing
+- Sample z-score: distance between observation and mean, measured in units of standard deviation
+- Percentile: 75 percentile is when you are higher than 75% of the sample
+
+
+### Chapter 3: Describing bivariate data
+#### data that has one qualitative component one quantitative
+- Bar charts that have different categories as the legend
+- Side by side pie charts 
+
+#### Two quantitative variables descriptions
+- Scatter plot
+  - Identify if there are patterns
+  - How strong is the pattern?
+  - Are there any unusual observations like outliers or groups?
+  
+- Correlation coefficient
+$$ r = s_{xy} / (s_xs_y) $$
+  - Where the numerator is the covariance between x and y
+$$ s_{xy} = \frac{\sum{(x_i - \bar{x})(y_i - \bar{y})}}{(n - 1)} $$
+or
+$$ s_{xy} = \frac{\sum x_iy_i - \frac{(\sum x_i)(\sum y_i)}{n}} {n-1} $$
+
+- The correlation is used to determine the emergence of a pattern in the data set
+  - If the pattern forms a negative slope, then r will be negative
+  - If the pattern forms a positive slope, then r will be positive
+  - If the pattern doesn't have a trend, then r will be close to 0
+  
+- The best fitting line is the least-squares or regression line
+  - the formula for it is as follows:
+$$ b = r(\frac{s_{xy}}{(s_x)^2})$$
+$$ a = \bar{y} - b\bar{x}$$
+$$ y = a + bx $$
+
+## Swirl Lesson 9: Functions in R
+Functions are one of the building blocks of R
+Functions that start with "Sys" use the values based on your computer's environment
+
+Other common functions include things like **mean()**, **median()**, the remainder operation being %%
+
+Using R means to understand that:
+  1. Everything that exists is an object
+  2. Everything that happens is a function call
+  
+You can see the source code for a function if you type out the function name with no parentheses and no arguments
+
+For functions, you are also able to specify a default value of an argument if you don't always want to modify it
+  - function(arg1, arg2 = x)
+  - R is also able to partially match arguments, where it takes what it thinks is what you mean and uses it, rather than throwing an error
+  
+Functions can be used as arguments within another function
+  - Anonymous functions are when functions are not given a name, but passed through another function or used in some way
+  - Eg, **evaluate(function(x){x+1}, 6)**
+  
+Another common function is the **paste()** function, which combines arguments into one string
+  - It takes "..." as the first argument, which means an infinite number
+  - A strict rule in R is to have ANY arguments after an ellipsis to have default values
+
+From a list, double brackets allow you to index for specific positions of a value within the list, using the values themselves
+
+## Lab 4: 
+### 2. Create the call functions in R
+```{r}
+f <- function(a){
+  return(sum(a, na.rm=T)/length(na.omit(a)))
+}
+f(c(1,2,3,4))
+```
+
+```{r}
+d <- function(x, y){
+  xs <- mean(y, na.rm = T)
+  sdev <- sd(y, na.rm = T)
+  return((x - xs) / sdev)
+}
+d(2, c(1,2,3,4,5,6))
+
+rm(list = ls())
+```
+
+
+
+# Week 5: Feb 8 - Feb 15
+## Module 5: Probability; control statements and loops in R
+
+### Probability
+Probability is used as a tool to help evaluate the reliability of our conclusions
+
+Simple events: 
+
+  - Outcome observed on a single repetition of an experiment, which is denoted as $$ E_x $$
+  - The set of fall simple events is called the sample space $$ S $$
+  
+$$ S = {E_1, E_2, E_3, E_4, E_5, E_6} $$
+
+If the events occur in such a way that when one happens, the other is impossible, then it is mutually exclusive
+  - Probability is another way of saying relative frequency
+  
+Permutations are used to describe the number of ways to arrange "n" objects, taking "r" objects at a time, where ORDER MATTERS
+$$
+Permutation("n"objects, take "r") = \frac{n!}{(n-r)!}
+$$
+
+Combinations are how many distinct combinations you can make of the "r" objects you take from a group of "n", where order DOES NOT matter
+$$
+Combination("n" objects, take "r") = \frac{n!}{r!(n-r)!}
+$$
+
+$$
+Combination("n" objects, take "r") = \frac{Permutation("n" objects, take "r")}{r!}
+$$
+
+Another part of probability is the union and intersection of events
+$$
+P(AuB) = P(A) + P(B) - P(AnB)
+$$
+
+Probability of A given B
+$$
+P(A|B) = \frac{P(AnB)}{P(B)}
+$$
+
+### Control statements in R
+The control statements in R are if and else
+  - The else statement has to be on the same line as the if conditional assessment
+```{r}
+yippee <- function(a){
+  if (a==1){
+    print("Wow!") } else {
+    print("Aww")
+  }}
+
+yippee(1)
+```
+Another example using else if:
+
+```{r}
+f2 <- function(x){
+  if (x  == 1){
+    print("Hello")
+  } else if (x == 0) {
+    print("goodbye")
+  } else{
+    print("confused")
+  }
+}
+f2(4)
+```
+
+### Loops in R
+Similar to loops in Python, R loops are used to go through multiple indexes at once
+```{r}
+for (i in 1:10) {
+  print(i)
+}
+```
+
+The while loop may also be used
+```{r}
+x <- 1
+while (x <= 5) {
+  print(x)
+  x <- x +1
+}
+```
+
+Sometimes we need to skip over one iteration
+```{r}
+for (i in 1:10){
+  if (i == 3){
+    next
+  }
+  print(i)
+}
+```
+
+Or break out of the loop entirely
+```{r}
+for (i in 1:10){
+  if (i == 4){
+    break
+  }
+  print(i)
+}
+rm(list = ls())
+```
+
+## Course reading
+### Beaver chapter 4: probability and probability distributions
+#### Events and the sample space
+- Experiments are the process which an observation is measured
+- Simple events are the outcome of a single repetition of the experiment
+- An event is a collection of simple events
+  - Set of all simple events is a sample space, S
+  
+  
+#### Calculating probabilities using simple events
+- Relative frequency = Frequency/n
+
+Requirements for simple event probabilities
+
+  - Each probability must lie between 0 and 1
+  - The sum of the probabilities for all simple events in a sample space S must equal 1
+  
+  
+#### Useful counting rules
+mn rule: if you have to choose between m things, then n things within, then the total sample space is mn
+
+Permutations are the number of ways we can arrange n distinct objects, taking r at a time
+
+Number of ways to arrange a set of n distinct items is 'n!'
+
+Combinations are the ways we can arrange distinct combinations of n distinct objects, taking r at a time
+
+P(Event) = desired outcome / all outcomes
+        = Combination(n=1, r=1) x Combination(n=11, r=3) / Combination(n=12, r=4)
+        - This shows the probability of if one person is in the set while others are any body
+
+
+#### Event relations and probability rules
+Union: both A and B, or A or B
+
+Intersection: only A and B
+
+Complement: the event that another event does NOT occur
+
+
+#### Independence, conditional probability, and the multiplication rule
+- Independent events are iff the probability of one does not effect the probability of the other
+
+$$ P(AnB) = P(A)P(B|A) $$
+or
+$$ P(AnB) = P(B)P(A|B) $$
+
+Conditional probabilities 
+$$ P(A|B) = \frac{P(AnB)}{P(B)} if P(B) does not equal 0 $$
+
+For independent events,
+$$ P(AnB) = P(A)P(B) $$
+$$ P(B|A) = P(B) $$
+
+#### Bayes rule
+$$ P(S_i|A) = \frac{P(S_i)P(A|S_i)}{P(S_1)P(A|S_1) + P(S_2)P(A|S_2) + ... + P(S_k)P(A|S_k)} $$
+REVIEW BAYES RULE
+
+
+### Intro stats with R: chapter 3 - Probability distributions
+
+#### 1. Random Sampling
+Use the **sample()** function to sample from a data set
+
+#### 2. Probability calculations and combinatorics
+Use the **prod()** function to multiply a series of numbers
+
+
+
+## Swirl lesson 10: lapply and sapply
+- lapply and sapply are known as the loop functions in R
+  - They split data into smaller pieces, apply a function to each piece, then combine the results
+- to use the *apply functions, you need to specify the object you want to split/apply/combine, as well as the action you would like to perform on the object. For a function, do NOT include the parentheses
+  - **lapply** will return a list, hence the 'l' in the front
+    - if the output of lapply appear to be the same class, then you can put it into a vector for more compact storing
+  - **sapply** will process **lapply** behind the scenes, then simplify as much as it can for you
+    - it takes the same parameters as **lapply**
+    - if it can't simplify, then it'll return a list
+
+## Lab 5: 
+3. Control statements and loops in R
+```{r}
+marks <- function(x){
+  for (i in 1:length(x)) {
+    if (x[i] < 60 && x[i] >= 0) {
+      print("F")
+    } else if (x[i] >= 60 && x[i] < 70) {
+      print("D")
+    } else if (x[i] >=70 && x[i] < 80) {
+      print("C")
+    } else if (x[i] >=80 && x[i] < 90) {
+      print("B")
+    } else if (x[i] >= 90 && x[i] <= 100) {
+      print("A")
+    } else {
+      print("invalid mark")}
+  }
+}
+marks(c(10, 1, -2, 124, 100))
+```
+# Week 6: Feb 15-Feb 22
+## Module 6
+### Discrete distributions
+
+1. Uniform probability distributions
+
+  - Each outcome has the same probability
+  - Histograms look like a straight, horizontal line
+  
+2. Bernoulli distributions
+
+  - Two outcomes, denoted by *p* and *1-p*
+  - When generalized, turns into the binomial distribution
+    - which, when generalized further to represent the probability of event 1 happening, begins to look like a normal distribution
+  - Of course, unlike the normal distribution or uniform distribution, the probability of event 1 may not be 5050
+  
+3. The binomial distribution
+$$ 
+P(X = k) = C_k^n p^k (1-p)^{n-k} = \frac{n!}{k!(n-k)!} p^k (1-p)^{n-k}
+$$
+
+  - Where p = probability of event 1 happening in one instance
+    - n = number of trials
+    - k = number of successes
+  - Mean = np
+  - Variance = np(1-p)
+  - The probability is always given
+  
+Eg, You want P(x=3) of a binomial distribution with probability 0.2
+```{r}
+dbinom(3, 12, 0.2)
+# First argument is x, second is n, third is p
+# Obtains exact probability of having 3 successes in 12 trials
+```
+
+To make a probability that is simply more than a certain number of successes within a set number of trials, you add the probabilities that are above that parameter.
+
+  - Eg, If you want to know the probability of having more than 3 successes in 5 trials, then you add the probabilities of x = 4 and x = 5. 
+```{r}
+pbinom(3, 5, 0.2)
+# first argument is successes, second is n, third is probability
+# This function gives you the probability of successes up to 3, so if you want the complement of that, then you should use the inverse, which is 1 - pbinom(3, 5, 0.2)
+```
+
+4. Poisson distribution
+
+  - Poisson random variable 'X' is the number of events that occur in a period of time or space during which an average of such events are known
+  - The average will always be given as a unit per something, whether that be time, space, or page
+    - Denoted by λ
+  - Variance = λ
+  
+$$
+P(X = q) = \frac{\lambda^q e^{-\lambda}}{q!}
+$$
+
+  - Eg, Average people who come in is 5 per day, find probability of less than two patients
+    - Less than 2 means either 1 or 0
+      - k = 1 or 0
+      - mean = 5
+```{r}
+dpois(1,5) + dpois(0,5)
+ppois(1,5) # This is the cumulative distribution
+rm(list = ls())
+```
+5. Hypergeometric distribution
+
+  - A population has **M** successes in **N** trials
+  - We want to find the probability of exactly *k* successes in a sample trial of *n*
+
+$$
+P(x=k) = \frac{C_k^M C_{n-k}^{N-M}} {C_n^N}
+$$
+
+$$
+\mu = n(\frac{M}{N})
+$$
+
+$$
+\sigma^2 = n(\frac{M}{N})(\frac{N-M}{N})(\frac{N-n}{N-1})
+$$
+
+### Basic plotting in R
+
+1. Line charts
+
+```{r}
+x <- c(1, 3, 5, 1, 4)
+y <- c(2, 5, 1, 4, 3)
+plot(x, type = "o", col = "blue")
+lines(y, type = "o", pch = 22, lty = 2, col = "red")
+```
+
+
+2. Bar Charts
+```{r}
+barplot(x, col = "blue")
+barplot(y, col = "red")
+```
+
+3. Histograms
+```{r}
+hist(x, col = "blue", main = "distribution of x")
+```
+
+4. Pie charts
+```{r}
+pie(x)
+```
+
+5. Dot chart
+```{r}
+dotchart(x)
+rm(list = ls())
+```
+
+
+## Week 6 readings
+### beaver chapter 5: discrete distributions
+1. The binomial distribution
+
+  - Certain characteristics must appear for the experiment to be considered binomial in nature
+    - Each experiment consists of 'n' identical trials
+    - each trial results in one of two outcomes
+    - probability of a success on a single trial is 'p', while the opposite is (1-p) = 'q'
+      - 'p' is consistent
+    - trials are independent
+    - 'x' denotes the number of successes observed during the 'n' trials
+  - As a rule of thumb, if the sample size is larger than 5% of the population, then the resulting experiment is not binomial
+  - When 'p' differs, it skews the histogram
+    - p = 0.5 will be symmetrical
+    - p < 0.5 will be skewed towards the left
+    - p > 0.5 will be skewed towards the right
+    
+2. The poisson probability distribution
+
+  - Can be used as an accurate approximate to the binomial distribution when **'n'** is large and **'np'** is less than 7
+  
+3. The hypergeometric probability distribution
+  
+  - Used when the size of the sample is large compared to the population
+  - Makes use of population, population portion of successes, sample, desired successes in the sample
+  
+  
+### Intro to stats with R: chapter 3 - probability and distributions section 3.3 and 3.5
+Built in distributions in R
+ 
+  - Each has a set of items
+    - Density/point probability
+    - Cumulated probability
+    - Quantiles
+    - Pseudo-random numbers
+
+Eg, normal distribution in R
+```{r}
+x <- seq(-4, 4, 0.1)
+plot(x, dnorm(x), type = "l") # plots a chart of the frequency of each value, according to a normal distribution
+pnorm(100, mean = 120, sd = 20) # measures the cumulative probability of 100 or less when mean is 120 and sd is 20
+
+# qnorm() can be used to find confidence intervals as well
+qnorm(0.025) # gives the 2.5% quantile in the normal distribution, which can serve as one side of a symmetrical 95% confidence interval
+
+xbar <- 83
+sigma <- 122
+n <- 5
+sem <- sigma/sqrt(n)
+xbar + sem * qnorm(0.025)
+xbar + sem * qnorm(0.975)
+
+rnorm(10) # gives ten random numbers from a normal distribution
+  # has parameters mean, sd
+  # binomial version rbinom() has parameters size, probability
+rm(list = ls())
+```
+
+## Lab 6: binomial, poisson, hypergeometric
+1. The binomial distribution in R
+  
+A binomial distribution has been defined by 5 tosses of a fair coin where p = 0.5
+
+a.
+```{r}
+x <- rbinom(10000, 5, 0.5)
+```
+b.
+```{r}
+hist(x)
+```
+c.
+```{r}
+y <- rbinom(10, 5, 0.5)
+```
+d.
+```{r}
+hist(y)
+```
+f. 
+```{r}
+dbinom(1, 5, 0.5) + dbinom(2, 5, 0.5) + dbinom(3, 5, 0.5) + dbinom(4, 5, 0.5) + dbinom(0, 5, 0.5)
+```
+g. 
+```{r}
+pbinom(4, 5, 0.5)
+```
+h. 
+```{r}
+mean(rbinom(10000, 5, 0.5)) # ??????????????????
+```
+i.
+```{r}
+dbinom(10,10,0.2)
+# 1.024e-07
+```
+j.
+```{r}
+pbinom(4, 12, 0.2)
+# 0.9274445
+```
+
+2. The poisson distribution
+mean = 12 in a 1 minute period
+
+a. 
+```{r}
+help("ppois")
+```
+b. 
+```{r}
+ppois(1, 12, lower.tail = TRUE)
+```
+c. 
+```{r}
+# probability of having 16 or less cars crossing the bridge in any given minute
+ppois(16, 12, lower.tail = TRUE)
+# since it crosses over the mean, the probability should be more than half
+```
+d. 
+```{r}
+# new mean is 12*60 = 720 cars per hour. We want the probability of exactly 0
+dpois(0, 720)
+rm(list = ls())
+```
+
+3. The hypergeometric distribution in R
+
+
+# Week 7: Midterm exam!
