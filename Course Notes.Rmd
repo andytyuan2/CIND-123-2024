@@ -3,8 +3,8 @@ title: "CIND 123 Course Notes"
 author: "Andy Yuan"
 date: "`r Sys.Date()`"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 # Week 1: Jan 11 - Jan 18, 2024
@@ -901,7 +901,7 @@ Probability is used as a tool to help evaluate the reliability of our conclusion
 Simple events: 
 
   - Outcome observed on a single repetition of an experiment, which is denoted as $$ E_x $$
-  - The set of fall simple events is called the sample space $$ S $$
+  - The set of all simple events is called the sample space $$ S $$
   
 $$ S = {E_1, E_2, E_3, E_4, E_5, E_6} $$
 
@@ -1320,7 +1320,7 @@ mean = 12 in a 1 minute period
 
 a. 
 ```{r}
-help("ppois")
+# help("ppois")
 ```
 b. 
 ```{r}
@@ -1343,3 +1343,21 @@ rm(list = ls())
 
 
 # Week 7: Midterm exam!
+
+You can't replace a row in a matrix if it is not the right length
+
+Mutually exclusive events
+
+  - When P(AnB) = 0
+  
+Independent events
+
+  - When P(A) * P(B) = P(AnB)
+  
+Population of interest:
+
+  - Population in which the researcher wants to draw conclusions from
+    - Eg, survey is sent to 1 million, in a sample of 10,000, 6,000 respond with x. The population of interest is the 1 million the survey was sent to
+    
+Number of simple events is the number of outcomes of a single event, to the power of how many times you are performing the event
+  - flipping a coin 4 times gives you a total of 16 simple events
