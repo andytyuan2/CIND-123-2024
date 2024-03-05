@@ -1,0 +1,208 @@
+---
+title: 'CIND 123 - Data Analytics: Basic Methods'
+author: 
+output:
+  html_document: default
+  word_document: default
+  pdf_document: default
+---
+<center> <h1> Assignment 2 (10%) </h1> </center>
+<center> <h3> [Insert your full name] </h3> </center>
+<center> <h3> [Insert course section & student number] </h3> </center>
+---
+
+## Instructions ssss
+
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. Review this website for more details on using R Markdown <http://rmarkdown.rstudio.com>.
+
+Use RStudio for this assignment. Complete the assignment by inserting your R code wherever you see the string "#INSERT YOUR ANSWER HERE".
+
+When you click the **Knit** button, a document (PDF, Word, or HTML format) will be generated that includes both the assignment content as well as the output of any embedded R code chunks.
+
+Submit **both**  the rmd and generated output files. Failing to submit both files will be subject to mark deduction.
+
+## Question 1 (40 points)
+
+The Titanic Passenger Survival Data Set provides information on the fate of passengers on the fatal maiden voyage of the ocean liner "Titanic." The dataset is available from the Department of Biostatistics at the Vanderbilt University School of Medicine (https://biostat.app.vumc.org/wiki/pub/Main/DataSets/titanic3.csv) in several formats. Store the Titanic Data Set `titanicDataset` using the following commands. 
+
+
+```{r}
+#install.packages("titanic")
+library(titanic)
+titanicDataset <- read.csv(file = "https://biostat.app.vumc.org/wiki/pub/Main/DataSets/titanic3.csv", stringsAsFactors = F)
+str(titanicDataset)
+```
+
+a) Extract and show the columns `name`, `fare`, `sibsp`, and `parch` into a new data frame named 'titanicSubset'. (5 points)
+
+```{r}
+#INSERT YOUR ANSWER HERE
+titanicSubset <- data.frame(titanicDataset[c('name', 'fare', 'sibsp', 'parch')])
+head(titanicSubset)
+```
+
+
+b) Numerical data: Use the count() function from the `dplyr` package to calculate the total number of passengers who were children (age less than 18) and survived. (5 points)
+HINT: To count the occurrences of survived or not in the titanicDataset data frame using the `dplyr` package, you can use the pipe operator (%>%) to chain operations. 
+```{r}
+#INSERT YOUR ANSWER HERE
+library(dplyr)
+countsurvive <- dplyr::count(titanicDataset['age' < 18 & 'survived' == 1])
+survived <- sum(titanicDataset$survived[titanicDataset$age < 18], na.rm = T)
+countsurvive
+survived
+```
+
+
+c) Categorical data: Use count() and group_by() functions from the dplyr package to calculate the number of passengers by `sex`. (5 points)
+HINT: Use group_by() first then pipe the result to count() to calculate the number of passengers. 
+```{r}
+#INSERT YOUR ANSWER HERE
+
+```
+
+d) Find the passengers in the data frame whose age information is missing, and fill them with the median age of passengers. (3 points)
+
+```{r}
+#INSERT YOUR ANSWER HERE
+```
+
+e) Use the aggregate() function to calculate the 'survivalCount' of each `pclass` and calculate the survival rate of passengers in each passenger class. Then, draw a conclusion on which passenger class has the highest survival rate. (5 points)
+
+
+```{r}
+#INSERT YOUR ANSWER HERE
+
+```
+
+
+f) Use a boxplot to display the distribution of `fare` for each `sex` and infer which gender tends to pay higher fares. (5 points)
+```{r}
+#INSERT YOUR ANSWER HERE
+```
+
+
+g) Calculate the mean `fare` for each `sex` and describe if the calculation aligns with the boxplot. (5 points)
+```{r}
+#INSERT YOUR ANSWER HERE
+
+```
+
+
+h) Use the for loop and if control statements to list the women's non-empty home destinations, age 50 or older, who embarked from Southampton on the Titanic. (7 points)
+```{r}
+#INSERT YOUR ANSWER HERE
+
+```
+
+
+
+## Question 2 (15 points)
+
+100 computers work together in a network. Based on historical data, each computer has a probability of 0.03 of encountering a software issue. If a computer encounters an issue, it affect the network's performance.
+
+a) Determine the probability that the network operates without any computer encountering a software issue. (5 points)
+```{r}
+#INSERT YOUR ANSWER HERE
+# P(X = 0) when n = 100 and p = 0.03
+dbinom(0, 100, 0.03)
+```
+
+b) Utilize the Binomial approximation to estimate the probability that at least 5 computers out of 100 encounter software issues. (5 points)
+```{r}
+#INSERT YOUR ANSWER HERE
+# At least 5 means the sum of the probabilities from 5 to 100, so we want to use the complement instead
+1 - pbinom(4, 100, 0.03)
+
+```
+
+c) Assume the first and second computers are independent. Calculate the conditional probability that the second computer (Computer B) encounters a software issue given that the first computer (Computer A) does not encounter any issue. (5 points)
+```{r}
+#INSERT YOUR ANSWER HERE
+
+# If the two computers are independent, then the result of the first computer has no bearing on the second computer. Therefore, the probability that the second computer encounters a software issue is 0.03, same as the first, third, and so on computers.
+```
+
+
+
+## Question 3 (25 points)
+
+On average, John receives 3 emails a day.
+
+a) Calculate all the probabilities that John receives 2, 3, ..., to 9 emails in a day. (5 points)
+```{r}
+#INSERT YOUR ANSWER HERE
+for (i in 2:9) {
+  print(dpois(i, 3))
+}
+```
+
+
+b) Determine the probability that John receives 4 emails or more in a day. (5 points)
+```{r}
+#INSERT YOUR ANSWER HERE
+# We want the complement of 3 or less emails
+1 - ppois(3, 3)
+```
+
+
+c) Compare the similarity between Binomial and Poisson distribution. (15 points @ 5 point each)
+1) Generate 50,000 samples for a Binomial random variable using parameters described in Question 3.
+2) Generate 50,000 samples for a Poisson random variable using parameters described in Question 3.
+3) Illustrate how well the Poisson probability distribution approximates the Binomial probability distribution using multhist() from the 'plotrix' package.
+```{r}
+#INSERT YOUR ANSWER HERE
+
+# 1)
+bindomrandom <- rbinom(50000, 3, 0.5)
+bindomrandom
+
+
+# 2)
+poissonrandom <- rpois(50000, 3)
+poissonrandom
+
+# 3)
+library('plotrix')
+plotrix::multhist(x = list(bindomrandom, poissonrandom), main = "Binomial vs Poisson", ylab = "Frequency", xlab = "Values")
+```
+
+
+
+## Question 4 (20 points)
+
+Write a script in R to compute the following probabilities of a normal random variable with mean 12 and variance 36.
+
+a) Calculate the probability that it lies between 10.5 and 18.7 (inclusive). (5 points)
+```{r}
+#INSERT YOUR ANSWER HERE
+pnorm(18.7, mean = 12, sd = 6) - pnorm(10.5, mean = 12, sd = 6)
+```
+
+
+b) Determine the probability that it is greater than 16.03. (5 points)
+```{r}
+#INSERT YOUR ANSWER HERE
+1 - pnorm(16.03, mean = 12, sd = 6)
+```
+
+
+c) Find the probability that it is less than or equal to 14.2. (5 points)
+```{r}
+#INSERT YOUR ANSWER HERE
+pnorm(14.2, mean = 12, sd = 6)
+```
+
+
+d) Compute the probability that it is less than 11 or greater than 14. (5 points)
+```{r}
+#INSERT YOUR ANSWER HERE
+greater_than_14 <- 1 - pnorm(14, mean = 12, sd = 6)
+less_than_11 <- pnorm(11, mean = 12, sd = 6)
+prob_between_11_14 <- greater_than_14 + less_than_11
+prob_between_11_14
+```
+
+
+END of Assignment #2.
