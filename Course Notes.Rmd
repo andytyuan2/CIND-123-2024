@@ -239,6 +239,8 @@ rm(list = ls())
 ### Matrices in R
 We use matrices in R to perform operations similar to uses in linear algebra. As always, the matrix is ROW x COLUMN when saying it. We make sure that when creating a matrix, then we are able to first define the numbers within it, then the dimensions that they fit in. 
 
+All elements of a matrix must be the same type, while a data frame can have different data types in different columns
+
 ```{r}
 x <- 1:12
 dim(x) <- c(3, 4)
@@ -659,6 +661,8 @@ rm(list = ls())
 ### Arrays, lists, and data frames in R
 #### Arrays
 Arrays are three-dimensional matrices, where the first two dimensions will be rows and columns, while the third dimension tells you the number of matrices attached to the array.
+
+Arrays can have an arbitrary amount of dimensions
 ```{r}
 firstterm <- matrix(c(76, 61, 80, 70, 65, 90), nrow = 3)
 secondterm <- matrix(c(86, 71, 90, 83, 65, 90), nrow = 3)
@@ -1361,3 +1365,34 @@ Population of interest:
     
 Number of simple events is the number of outcomes of a single event, to the power of how many times you are performing the event
   - flipping a coin 4 times gives you a total of 16 simple events
+  
+  
+```{r}
+fun <- function(a) {
+  while (a < 15){
+    a <- a + 1
+    print(a)
+  }
+}
+
+fun(10)
+```
+
+
+# week 8: March 7 - March 14
+
+## Module 8: The normal probability distribution and applications in R
+
+Continuous random variables can assume infinitely many values
+
+The normal curve is a **symmetric** curve which has the shape of a **bell**.
+
+  - The range of a normal distribution has infinite range
+  - Tails are approaching but never touching the x-axis
+  - The **AREA** under the curve is equal to 1
+  
+**Equation for a normal curve**
+
+$$
+f(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{-0.5(\frac{x-\mu}{\sigma})^2}
+$$
