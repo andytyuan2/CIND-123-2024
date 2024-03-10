@@ -1396,3 +1396,46 @@ The normal curve is a **symmetric** curve which has the shape of a **bell**.
 $$
 f(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{-0.5(\frac{x-\mu}{\sigma})^2}
 $$
+
+Which denotes the height of a curve at a given point "x", which is equivalent to the probability of that point "x".
+
+However, since this is a continuous random variable, the probability of a specific point will always be 0. 
+
+In this course, to find the area under the normal distribution, we will use the z score, which is written in terms of standard deviation units. 
+
+In terms of R, we use either p(distribution) or d(distribution)
+
+```{r}
+dnorm(2,mean = 0, sd = 1) # deals with height
+
+pnorm(2, mean = 0, sd = 1) # deals with area from the end of the lower tail of the distribution to the value specified
+
+curve(dnorm(x, mean = 0, sd = 1), from = -3, to=3) # function to draw curves, from one value to another
+```
+
+Example question, using normal distributions:
+
+- Student A has a mean of 30 minutes to get to school with standard deviation of 3 minutes
+- Student B has a mean of 27 minutes to get to school with a standard deviation of 7 minutes
+
+What is height of the probability at x = 28.5 for student A?
+```{r}
+dnorm(28.6, mean = 30, sd = 3)
+```
+
+Plot the distribution period from 15 to 45 minutes of the first student
+```{r}
+curve(dnorm(x, mean = 30, sd = 3), from = 15, to = 45)
+```
+
+Find the probability of the second student arriving 20 minutes or earlier
+```{r}
+pnorm(20, mean = 27, sd = 7)
+```
+
+Find the probability of the first student getting to school between 30 and 35 minutes
+```{r}
+pnorm(35, mean = 30, sd = 3) - pnorm(30, mean = 30, sd = 3)
+```
+
+rnorm() is used to select n random values from a normal distribution, n specifies the number of random selections you want.
