@@ -57,13 +57,14 @@ c) Categorical data: Use count() and group_by() functions from the dplyr package
 HINT: Use group_by() first then pipe the result to count() to calculate the number of passengers. 
 ```{r}
 #INSERT YOUR ANSWER HERE
-
+titanicDataset %>% group_by(sex) %>% count(name = 'grouped_sex')
 ```
 
 d) Find the passengers in the data frame whose age information is missing, and fill them with the median age of passengers. (3 points)
 
 ```{r}
 #INSERT YOUR ANSWER HERE
+titanicDataset$age[is.na(titanicDataset$age)] <- median(titanicDataset$age, na.rm = TRUE)
 ```
 
 e) Use the aggregate() function to calculate the 'survivalCount' of each `pclass` and calculate the survival rate of passengers in each passenger class. Then, draw a conclusion on which passenger class has the highest survival rate. (5 points)
@@ -71,13 +72,15 @@ e) Use the aggregate() function to calculate the 'survivalCount' of each `pclass
 
 ```{r}
 #INSERT YOUR ANSWER HERE
-
+titanicDataset %>% aggregate() %>% count()
 ```
 
 
 f) Use a boxplot to display the distribution of `fare` for each `sex` and infer which gender tends to pay higher fares. (5 points)
 ```{r}
 #INSERT YOUR ANSWER HERE
+
+titanicDataset %>% group_by(sex) %>% boxplot(fare, )
 ```
 
 
