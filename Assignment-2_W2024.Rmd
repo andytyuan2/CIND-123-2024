@@ -11,7 +11,7 @@ output:
 <center> <h3> [Insert course section & student number] </h3> </center>
 ---
 
-## Instructions ssss
+## Instructions
 
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. Review this website for more details on using R Markdown <http://rmarkdown.rstudio.com>.
@@ -48,10 +48,8 @@ HINT: To count the occurrences of survived or not in the titanicDataset data fra
 ```{r}
 #INSERT YOUR ANSWER HERE
 library(dplyr)
-countsurvive <- dplyr::count(titanicDataset['age' < 18 & 'survived' == 1])
-survived <- sum(titanicDataset$survived[titanicDataset$age < 18], na.rm = T)
+countsurvive <- titanicDataset %>% dplyr::count(age < 18, survived == 1, name = "survived_under") %>% sum(survived_under)
 countsurvive
-survived
 ```
 
 
@@ -148,14 +146,14 @@ b) Determine the probability that John receives 4 emails or more in a day. (5 po
 
 
 c) Compare the similarity between Binomial and Poisson distribution. (15 points @ 5 point each)
-1) Generate 50,000 samples for a Binomial random variable using parameters described in Question 3.
+1) Generate 50,000 samples for a Binomial random variable using parameters described in Question 2.
 2) Generate 50,000 samples for a Poisson random variable using parameters described in Question 3.
 3) Illustrate how well the Poisson probability distribution approximates the Binomial probability distribution using multhist() from the 'plotrix' package.
 ```{r}
 #INSERT YOUR ANSWER HERE
 
-# 1)
-bindomrandom <- rbinom(50000, 3, 0.5)
+# 1) According to question 2
+bindomrandom <- rbinom(50000,100,0.03)
 bindomrandom
 
 
