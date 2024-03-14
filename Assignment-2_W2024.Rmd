@@ -48,7 +48,7 @@ HINT: To count the occurrences of survived or not in the titanicDataset data fra
 ```{r}
 #INSERT YOUR ANSWER HERE
 library(dplyr)
-countsurvive <- titanicDataset %>% dplyr::count(age < 18, survived == 1, name = "survived_under") %>% sum(survived_under)
+countsurvive <- titanicDataset %>% dplyr::count(titanicDataset$age < 18, titanicDataset$survived == 1) %>% sum(na.rm = T)
 countsurvive
 ```
 
@@ -57,7 +57,7 @@ c) Categorical data: Use count() and group_by() functions from the dplyr package
 HINT: Use group_by() first then pipe the result to count() to calculate the number of passengers. 
 ```{r}
 #INSERT YOUR ANSWER HERE
-titanicDataset %>% group_by(sex) %>% count(name = 'grouped_sex')
+titanicDataset %>% dplyr::group_by(sex) %>% dplyr::count(name = "grouped_sex")
 ```
 
 d) Find the passengers in the data frame whose age information is missing, and fill them with the median age of passengers. (3 points)
@@ -72,7 +72,14 @@ e) Use the aggregate() function to calculate the 'survivalCount' of each `pclass
 
 ```{r}
 #INSERT YOUR ANSWER HERE
-titanicDataset %>% aggregate() %>% count()
+survivalCount <- aggregate(titanicDataset$survived, list(titanicDataset$pclass), FUN=sum)
+total_pclass <- titanicDataset %>% dplyr::group_by(pclass) %>% dplyr::count()
+
+survivalCount[,2] <- survivalCount[, 2] / total_pclass[, 2]
+
+survivalCount
+
+# Looks like passenger class number 2 has the highest survival rate
 ```
 
 
@@ -80,14 +87,20 @@ f) Use a boxplot to display the distribution of `fare` for each `sex` and infer 
 ```{r}
 #INSERT YOUR ANSWER HERE
 
-titanicDataset %>% group_by(sex) %>% boxplot(fare, )
+boxplot(titanicDataset$fare[titanicDataset$sex == "male"], main = "Male Fares")
+boxplot(titanicDataset$fare[titanicDataset$sex == "female"], main = "Female Fares")
+
+# the distribution of female fares is larger, so it looks like females tend to pay more for a ticket onto the boat
 ```
 
 
 g) Calculate the mean `fare` for each `sex` and describe if the calculation aligns with the boxplot. (5 points)
 ```{r}
 #INSERT YOUR ANSWER HERE
+mean(titanicDataset$fare[titanicDataset$sex == "male"], na.rm = T)
+mean(titanicDataset$fare[titanicDataset$sex == "female"], na.rm = T)
 
+# this seems to align with the boxplot in that females would pay more for a ticket than a male
 ```
 
 
