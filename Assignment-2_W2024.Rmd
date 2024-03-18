@@ -106,7 +106,17 @@ mean(titanicDataset$fare[titanicDataset$sex == "female"], na.rm = T)
 
 h) Use the for loop and if control statements to list the women's non-empty home destinations, age 50 or older, who embarked from Southampton on the Titanic. (7 points)
 ```{r}
-#INSERT YOUR ANSWER HERE
+#INSERT YOUR ANSWER HERE, one list
+women = list()
+number <- nrow(titanicDataset)
+titanicDataset[is.na(titanicDataset)] <- 0
+
+for (i in 1:number){
+  if ((is.character(titanicDataset$home.dest[i]) & titanicDataset$age[i] >= 50 & titanicDataset$embarked[i] == "S" & titanicDataset$sex[i] == "female") == TRUE){
+    women <- append(women, titanicDataset$home.dest[i])
+  }
+}
+women
 
 ```
 
