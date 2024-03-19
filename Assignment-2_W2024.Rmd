@@ -7,8 +7,8 @@ output:
   pdf_document: default
 ---
 <center> <h1> Assignment 2 (10%) </h1> </center>
-<center> <h3> [Insert your full name] </h3> </center>
-<center> <h3> [Insert course section & student number] </h3> </center>
+<center> <h3> [Andy Yuan] </h3> </center>
+<center> <h3> [DM0, 501314063] </h3> </center>
 ---
 
 ## Instructions
@@ -90,7 +90,7 @@ f) Use a boxplot to display the distribution of `fare` for each `sex` and infer 
 boxplot(titanicDataset$fare[titanicDataset$sex == "male"], main = "Male Fares")
 boxplot(titanicDataset$fare[titanicDataset$sex == "female"], main = "Female Fares")
 
-# the distribution of female fares is larger, so it looks like females tend to pay more for a ticket onto the boat
+# the distribution of female fares has a larger range and the median is higher than the males, so it looks like females tend to pay more for a ticket onto the boat
 ```
 
 
@@ -99,7 +99,6 @@ g) Calculate the mean `fare` for each `sex` and describe if the calculation alig
 #INSERT YOUR ANSWER HERE
 mean(titanicDataset$fare[titanicDataset$sex == "male"], na.rm = T)
 mean(titanicDataset$fare[titanicDataset$sex == "female"], na.rm = T)
-
 # this seems to align with the boxplot in that females would pay more for a ticket than a male
 ```
 
@@ -109,10 +108,10 @@ h) Use the for loop and if control statements to list the women's non-empty home
 #INSERT YOUR ANSWER HERE, one list
 women = list()
 number <- nrow(titanicDataset)
-titanicDataset[is.na(titanicDataset)] <- 0
+# titanicDataset[is.na(titanicDataset)] <- 0
 
 for (i in 1:number){
-  if ((is.character(titanicDataset$home.dest[i]) & titanicDataset$age[i] >= 50 & titanicDataset$embarked[i] == "S" & titanicDataset$sex[i] == "female") == TRUE){
+  if (( !is.na(titanicDataset$home.dest[i]) & titanicDataset$age[i] >=50 & titanicDataset$embarked[i] == "S" & titanicDataset$sex[i] == "female") == TRUE){
     women <- append(women, titanicDataset$home.dest[i])
   }
 }
@@ -180,12 +179,10 @@ c) Compare the similarity between Binomial and Poisson distribution. (15 points 
 
 # 1) According to question 2
 bindomrandom <- rbinom(50000,100,0.03)
-bindomrandom
 
 
 # 2)
 poissonrandom <- rpois(50000, 3)
-poissonrandom
 
 # 3)
 library('plotrix')
