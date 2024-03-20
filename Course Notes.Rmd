@@ -965,6 +965,8 @@ f2(4)
 
 ### Loops in R
 Similar to loops in Python, R loops are used to go through multiple indexes at once
+
+For loop
 ```{r}
 for (i in 1:10) {
   print(i)
@@ -1439,3 +1441,54 @@ pnorm(35, mean = 30, sd = 3) - pnorm(30, mean = 30, sd = 3)
 ```
 
 rnorm() is used to select n random values from a normal distribution, n specifies the number of random selections you want.
+
+
+# Week 9: Mar 14 - Mar 21
+## Module 9: sampling
+
+### Sampling:
+
+**4 Types of Sampling**
+
+- Simple random sampling: in a population, any sample of size n has the same chance of being selected
+- Stratified random sampling: first divides population into subpopulation. Then picks from these subpopulations
+- Cluster sampling: divides the population into related groups called clusters, then picks from the clusters a random sample
+- 1 in k systematic sampling: randomly selects one of the first *k* elements, then every *kth* element thereafter
+
+
+### Sampling distributions
+lower case n is always for sample, while upper case N is for populations
+
+The sampling distribution of a statistic: the probability distribution for the possible values of the statistic that results when random samples of n are repeatedly drawn from the population
+
+Eg, Select two numbers from [5, 10, 15] WITH replacement, so there are 9 total possibilities
+
+  - When you aggregate the means of these pairs, then you will end up with an average of average of 10, which is the same as the mean when you look at the three numbers
+  
+  
+### Central limit theorem
+Under general conditions, the sums and means of random samples of measurements drawn from a population tend to have an approximately normal distribution
+
+
+
+## Reading chapter 7 beaver stats
+- Sampling distribution of the sample mean
+
+If a random sample of n measurements is selected from a population with mean mu and standard deviation sigma, the sampling distribution of the sample mean x bar will have mean mu and standard deviation
+
+$$ 
+\frac{\sigma}{\sqrt{n}}
+$$
+
+**The standard error** 
+
+The standard error of the estimator because it refers to the precision of the estimator. The standard deviation of the mean is the standard deviation given above.
+
+When sample of n are randomly selected from a finite population N whose mean is mu and variance is sigma squared. The standard deviation of x bar is: 
+
+$$ 
+\frac{\sigma}{\sqrt{n}} \sqrt{\frac{N-n}{N-1}}
+$$
+
+If the population N is **large** relative to the sample size, then standard deviation of x bar is the same as the one before
+
