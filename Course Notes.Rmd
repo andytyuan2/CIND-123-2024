@@ -1438,6 +1438,7 @@ pnorm(20, mean = 27, sd = 7)
 Find the probability of the first student getting to school between 30 and 35 minutes
 ```{r}
 pnorm(35, mean = 30, sd = 3) - pnorm(30, mean = 30, sd = 3)
+rm(list = ls())
 ```
 
 rnorm() is used to select n random values from a normal distribution, n specifies the number of random selections you want.
@@ -1484,11 +1485,38 @@ $$
 
 The standard error of the estimator because it refers to the precision of the estimator. The standard deviation of the mean is the standard deviation given above.
 
-When sample of n are randomly selected from a finite population N whose mean is mu and variance is sigma squared. The standard deviation of x bar is: 
+When sample of n are randomly selected from a finite population N whose mean is mu and variance is sigma squared. Additionally, sample n is not that small compared to population N The standard deviation of x bar is: 
 
 $$ 
 \frac{\sigma}{\sqrt{n}} \sqrt{\frac{N-n}{N-1}}
 $$
 
-If the population N is **large** relative to the sample size, then standard deviation of x bar is the same as the one before
+If the population N is **large** relative to the sample size, then standard deviation of x bar is the same as the one before.
+
+
+
+## Lab 8: sampling
+
+### 1. Sampling distribution
+
+1. Given a vector of three numbers x = c(5, 10, 15), use the permutation() function to generate all possible outcomes for two selected numbers.
+
+```{r}
+library(gtools)
+x <- c(5, 10 ,15)
+perm <- permutations(length(x), 2, x, repeats.allowed = TRUE)
+perm
+```
+
+2. Use the row means() function to calculate the average of each possible pair in the previous step
+```{r}
+mean_perm <- rowMeans(perm)
+mean_perm
+```
+
+### 2. Discrete distributions convergence
+
+when the sample set is large, poisson distribution with lambda "n" converges to normal distribution with mean "n" and variance "n"
+
+Binomial distribution will converge to a normal distribution with mean "np" and variance "np(1-p)"
 
