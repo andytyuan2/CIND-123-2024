@@ -1520,3 +1520,58 @@ when the sample set is large, poisson distribution with lambda "n" converges to 
 
 Binomial distribution will converge to a normal distribution with mean "np" and variance "np(1-p)"
 
+
+
+# Week 10: Mar 22 to Mar 29
+## Module 10: Linear regression and linear models in R
+
+Linear regression is an approach for modelling the relationship between a dependent variable and one or more independent variables. The case of more than one independent variable is called multiple linear regression.
+
+Rather than y = mx + b, in stats we use y = alpha + beta*x. It will still find the value of y when x is given to us.
+
+### Finding the line of best fit
+
+Least square method:
+
+With data points plotted on a graph, a line is considered the best fit if the cumulative **SQUARED** deviation from each datapoint is the lowest it can be.
+
+Method to obtain line of best fit. **y = mx + b**
+
+  - Start with a set of x and y values ([x1, x2, x3], [y1, y2, y3])
+  - Calculate mean of both x and y values
+  - Calculate coefficient of line: m
+  
+$$
+S_{xy} = \sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y}) = (computing formula)\sum x_i y_i - \frac{(\sum x_i)(\sum y_i)}{n}
+$$
+
+$$
+s_{xx} = \sum (x_i - \bar{x})^2 = (computing formula)\sum_{i=1}^{n}x_i^2 - (\sum_{i=1}^{n}x_i^2)/n
+$$
+
+$$
+m = \frac{s_{xy}}{s_{xx}}
+$$
+
+  - Calculate b, the y intercept
+  
+  The value of b is when you set y = mean of y and x = mean of x
+  b = y - mx
+  
+  
+### Linear regression in R
+
+First, find any missing values in the dataset you are working with using the sum and which functions
+
+  sum(is.na(dataset$column)) -> gives number of na values within the column
+  which(is.na(dataset$column)) -> gives where the na value is in the column
+
+Then, remove or replace the NA value(s) using na.omit and assigning to a new variable
+
+  new_dataset <- na.omit(dataset)
+
+Now, use the lm() function to perform linear regression on the columns you choose
+
+  lm(column1 ~ column2, data = new_dataset)
+  
+This function will give the coefficient and intercept, so you can then determine an expected y value given any x value
