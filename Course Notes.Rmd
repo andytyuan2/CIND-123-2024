@@ -1572,6 +1572,92 @@ Then, remove or replace the NA value(s) using na.omit and assigning to a new var
 
 Now, use the lm() function to perform linear regression on the columns you choose
 
-  lm(column1 ~ column2, data = new_dataset)
+  lm(column1(y) ~ column2(x), data = new_dataset)
   
 This function will give the coefficient and intercept, so you can then determine an expected y value given any x value
+
+## Intro to stats with R: chapter 6 - Regression and correlation
+
+### 6.1 simple linear regression
+
+```{r}
+library(ISwR)
+attach(thuesen)
+```
+
+```{r}
+summary(lm(short.velocity ~ blood.glucose)) # shows more information about the linear model created
+
+# First, a dissection of what you called
+# Then, distribution of the residuals, where the median should not be far from 0
+# After, we see the intercept and regression coefficient, where the stars show how significant
+  # *** means p value is between 0 and 0.001, while * means p value is between 0.01 to 0.05. Though these typically won't affect your work
+# Next, residual standard error: variation of the observations around the regression line. It will also tell you if there are missing values
+# An R squared value is given to show how well the line fits with the data. Closer to 1 is better, closer to NEGATIVE 1 is bad fit
+# Finally, an F test is given for the hypothesis that the regression coefficient is 0
+```
+
+### 6.2 residuals and fitted values
+
+The fitted() function gives the y values you would EXPECT given a x value from the dataset. This is what the value would be if on the line of best fit.
+
+The resid() function shows the difference between the fitted values and the observed values.
+
+To instantly get rid of any NA values that may be present when you're plotting out a data set, then the na.exclude() call can do that for you. I would prefer to use it as an option, but you can use it as an argument in lm() as well
+
+```{r}
+lm.velo <- lm(short.velocity ~ blood.glucose)
+lm.velo
+```
+
+To create a plot that has a line of best fit AND the residuals going towards the line of best fit, use the segments() function to draw line segments. The arguments to pass will be endpoint coordinates in the order **(x1, y1, x2, y2, ..., xn, yn)**
+
+```{r}
+segments(blood.glucose, fitted(lm.velo), blood.glucose, short.velocity)
+```
+
+
+### 6.3 prediction and confidence bands
+
+Fitted lines have two uncertainty bands around them
+
+  - Confidence bands - the narrow type - reflect uncertainty about the line itself. They will be narrowest at the mean, and then will diverge from there
+  - Prediction bands - the wide type - reflect uncertainty about the future observations. They will capture most of the known observations to allow for more leeway for future observations. They approach the true line plus minus 2 standard deviations, which when set on a normal distribution with more observations, will include 95% of the observations. These limits are limited in that they rely on normally distributed errors and a constant variance, so they are not good for small samples in particular.
+    - Can be pulled using the predict() function, with the linear model as an argument
+    - Additionally, arguments can be specifying if you want the new observations to be within the confidence bands or prediction bands
+      - predict(lm.velo, int="c"), predict(lm.velo, int="p")
+      
+It is possible to add prediction and confidence intervals to a scatterplot using matlines(), but there are a few caveats to take note of.
+
+  - sometimes column values are in random order
+  - prediction limits extendd outside plot region
+  - matlines() command needs to be prevented from cycling through line styles and colours
+  
+The solution is to *predict in a new data frame* containing suitable x values
+```{r}
+pred.frame <- data.frame(blood.glucose=4:20)
+pp <- predict(lm.velo, int = "p", newdata=pred.frame)
+pc <- predict(lm.velo, int = "c", newdata=pred.frame)
+plot(blood.glucose, short.velocity, ylim = range(short.velocity, pp, na.rm=T))
+pred.gluc <- pred.frame$blood.glucose
+matlines(pred.gluc, pc, lty=c(1,2,3), col = "black")
+matlines(pred.gluc, pp, lty=c(1,2,3), col = "black")
+```
+
+
+### 6.4 Correlation
+
+#### 6.4.1 Pearson correlation
+$$
+r = \frac{\sum (x_i - \bar{x}) (y_i - \bar{y})} {\sqrt {\sum (x_i - \bar{x})^2 \sum (y_i - \bar{y})^2}}
+$$
+where **r** is the empirical correlation coefficient. **|r|** will be less than 1 if there is a non-perfect linear relation between $$x_i$$ and $$y_i$$
+
+We can use the function cor() to compute the correlation between two or more vectors. You will need to pass a few extra arguments to avoid problems:
+
+  - use = "complete.obs" allows you to only use complete parts of the vectors
+  
+```{r}
+cor(blood.glucose, short.velocity, use = "complete.obs")
+# 0.4167546
+```
