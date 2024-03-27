@@ -1,0 +1,179 @@
+---
+title: "CIND 123: Data Analytics Basic Methods: Assignment-3"
+output: html_document
+---
+<center> <h1> Assignment 3 (10%) </h1> </center>
+<center> <h2> Total 100 Marks </h2> </center>
+<center> <h3> [Insert your full name] </h3> </center>
+<center> <h3> [Insert course section & student number] </h3> </center>
+---
+
+
+## Instructions
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+Use RStudio for this assignment. Complete the assignment by inserting your R code wherever you see the string "#INSERT YOUR ANSWER HERE".
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+Submit **both**  the rmd and generated output files. Failing to submit both files will be subject to mark deduction.
+
+## Sample Question and Solution
+
+Use `seq()` to create the vector $(2,4,6,\ldots,20)$.
+
+```{r}
+#INSERT YOUR ANSWER HERE.
+seq(2,20,by = 2)
+
+```
+## Question 1 [15 Pts]
+
+a) [5 Pts] Midterm and final grades of some students are given as c(87, 72, 80, 91, 85, 96, 40, 34, 61) and c(59, 68, 52, 62, 78, 70, 35, 28, 45). Set R variables `midterm` and `final` respectively. Then find the least-squares line relating the final to the midterm. 
+
+   Does the assumption of a linear relationship appear to be reasonable in this case? Give reasons to your answer as a comment.
+```{r}
+#INSERT YOUR ANSWER HERE.
+
+```
+
+b) [5 Pts] Plot the final as a function of the midterm using a scatterplot and graph the least-square line in red color on the same plot. 
+```{r}
+#INSERT YOUR ANSWER HERE.
+
+```
+
+c) [5 Pts] Use the regression line to predict the final grades when the midterm grades are 83 and 22. 
+```{r}
+#INSERT YOUR ANSWER HERE.
+
+```
+
+
+
+## Question 2 [45 Pts]
+
+This question makes use of package "plm". Please load Crime dataset as follows:
+```{r load_packages}
+#install.packages("plm")
+library(plm) 
+data(Crime)
+```
+
+a) [5 Pts] Display the first 7 rows of 'crime' data and display the names of all the variables, the number of variables, then display a descriptive summary of each variable. 
+```{r}
+#INSERT YOUR ANSWER HERE.
+
+```
+
+b) [5 Pts] Calculate the mean,variance and standard deviation of probability of conviction (prbconv) by omitting the missing values, if any. 
+```{r}
+#INSERT YOUR ANSWER HERE.
+
+```
+c) [5 Pts] Use `lpolpc` (log-police per capita) and `smsa` variables to build a linear regression model to predict probability of conviction (prbconv).  And, compare with another linear regression model that uses `polpc` (police per capita) and `smsa`.
+
+   [5 Pts] How can you draw a conclusion from the results? 
+   (Note: Full marks requires comment on the predictors)
+```{r}
+#INSERT YOUR ANSWER HERE.
+
+```
+
+d) [5 Pts] Based on the output of your model, predict the output for different factors of `smsa` when `polpc` is set to 0.0025. Use both the predict function and intercept and slope equations and compare the results. 
+```{r}
+#INSERT YOUR ANSWER HERE.
+
+```
+e) [5 Pts] Find Pearson correlation between probability of prison sentence `prbpris` and tax per capita `taxpc`; and also Pearson correlation between probability of conviction `prbconv` and probability of arrest `prbarr`. 
+
+   [5 Pts] What conclusions can you draw? Write your reasons as comments.
+```{r}
+#INSERT YOUR ANSWER HERE.
+```
+
+f) [5 Pts] Display the correlation matrix of the variables: prbconv, prbpris, density, polpc. 
+
+   [5 Pts] Write what conclusion you can draw, as comments. 
+   
+```{r}
+#INSERT YOUR ANSWER HERE.
+```
+
+
+
+
+## Question 3 [15 Pts]
+
+This question makes use of package "ISwR". Please load `airquality` dataset as following:
+
+```{r}
+# or install.packages("ISwR")
+library(ISwR) 
+data(airquality)
+str(airquality)
+```
+
+
+a) [5 Pts] Plot a histogram to assess the normality of the `Ozone` variable, then explain why it does not appear normally distributed. 
+```{r}
+#INSERT YOUR ANSWER HERE.
+```
+
+b) [5 Pts] Create a boxplot that shows the distribution of `Ozone` in each month. Use different colors for each month. 
+
+```{r}
+#INSERT YOUR ANSWER HERE.
+
+```
+
+c) [5 Pts] Create a matrix of scatterplots of all the numeric variables in the `airquality` dataset (i.e. Ozone, Solar.R, Wind and Temp.)
+(Hint: investigate pairs() function) 
+
+```{r}
+#INSERT YOUR ANSWER HERE.
+
+```
+
+
+
+## Question 4 [25 Pts]
+
+Many times in data analysis, we need a method that relies on repeated random sampling to obtain numerical results. The underlying concept is to use randomness to solve problems. In fact,  this is a mathematical technique, which is used to estimate the possible outcomes of an uncertain event and is called the *Monte Carlo Method*. 
+
+Consider that We roll a die 10 times and we want to know the probability of getting more than 3 times of even numbers. This is a problem for the Binomial distribution, but suppose we don't know anything about Binomial distribution. We can easily solve this problem with a Monte Carlo Simulation.   
+
+
+a) [5 Pts] The Monte Carlo Method uses random numbers to simulate some process. Here the process is rolling a die 20 times. Assume the die is fair. What is the probability of success or getting an even number in rolling the die once?
+```{r}
+#INSERT YOUR ANSWER HERE.
+
+```
+
+
+b) [10 Pts] Define a function named `one.trial`, that simulates a single round of rolling a die 20 times and returns true if the number of even numbers is > 5.
+```{r}
+#INSERT YOUR ANSWER HERE.
+
+```
+
+c) [5 pts] Repeat the function `one.trial` for `N = 100,000` times and sum up the outcomes and store the result in a variable named `desired.output`. Compute the probability of getting more than 5 times of even numbers by using relative frequency. 
+
+```{r}
+
+
+```
+
+d) [5 pts] Use the Binomial formula you learned before to calculate such probability and Compare it with the probability value obtained in part (c).
+
+```{r}
+#INSERT YOUR ANSWER HERE.
+
+```
+
+Congratulations! you have completed the first run of the Monte Carlo simulation. 
+
+If there is further interest, put all the above logic in a function, and call it 50 times at least, and store the results in a vector called Prob then take the mean of Prob vector to be more accurate. 
+
+** End of Assignment **
