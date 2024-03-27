@@ -4,8 +4,8 @@ output: html_document
 ---
 <center> <h1> Assignment 3 (10%) </h1> </center>
 <center> <h2> Total 100 Marks </h2> </center>
-<center> <h3> [Insert your full name] </h3> </center>
-<center> <h3> [Insert course section & student number] </h3> </center>
+<center> <h3> [Andy Yuan] </h3> </center>
+<center> <h3> [DM0, 501314063] </h3> </center>
 ---
 
 
@@ -19,15 +19,6 @@ When you click the **Knit** button a document will be generated that includes bo
 
 Submit **both**  the rmd and generated output files. Failing to submit both files will be subject to mark deduction.
 
-## Sample Question and Solution
-
-Use `seq()` to create the vector $(2,4,6,\ldots,20)$.
-
-```{r}
-#INSERT YOUR ANSWER HERE.
-seq(2,20,by = 2)
-
-```
 ## Question 1 [15 Pts]
 
 a) [5 Pts] Midterm and final grades of some students are given as c(87, 72, 80, 91, 85, 96, 40, 34, 61) and c(59, 68, 52, 62, 78, 70, 35, 28, 45). Set R variables `midterm` and `final` respectively. Then find the least-squares line relating the final to the midterm. 
@@ -35,19 +26,32 @@ a) [5 Pts] Midterm and final grades of some students are given as c(87, 72, 80, 
    Does the assumption of a linear relationship appear to be reasonable in this case? Give reasons to your answer as a comment.
 ```{r}
 #INSERT YOUR ANSWER HERE.
+midterm <- c(87, 72, 80, 91, 85, 96, 40, 34, 61)
+final <- c(59, 68, 52, 62, 78, 70, 35, 28, 45)
 
+plot(final, midterm)
+lm(formula = midterm ~ final)
+abline(lm(midterm  ~ final))
+
+# I think the linear relationship is reasonable here
+  # blah blah blah
+  # COME BACK TO THIS
 ```
 
 b) [5 Pts] Plot the final as a function of the midterm using a scatterplot and graph the least-square line in red color on the same plot. 
 ```{r}
 #INSERT YOUR ANSWER HERE.
 
+plot(midterm, final, main = "Final score as a function of the midterm")
+abline(lm(final ~ midterm), col = "red")
+text(x = 60, y = 35, "final = 8.2940 + 0.6538midterm")
 ```
 
 c) [5 Pts] Use the regression line to predict the final grades when the midterm grades are 83 and 22. 
 ```{r}
 #INSERT YOUR ANSWER HERE.
-
+8.2940 + 0.6538*83 # 62.5594 final grade projected
+8.2940 + 0.6538*22 # 22.6776 final grade projected
 ```
 
 
