@@ -52,6 +52,8 @@ c) [5 Pts] Use the regression line to predict the final grades when the midterm 
 #INSERT YOUR ANSWER HERE.
 8.2940 + 0.6538*83 # 62.5594 final grade projected
 8.2940 + 0.6538*22 # 22.6776 final grade projected
+
+# COME BACK TO THIS QUESTION
 ```
 
 
@@ -68,13 +70,24 @@ data(Crime)
 a) [5 Pts] Display the first 7 rows of 'crime' data and display the names of all the variables, the number of variables, then display a descriptive summary of each variable. 
 ```{r}
 #INSERT YOUR ANSWER HERE.
+head(Crime, 7)
+
+names(Crime)
+
+ncol(Crime)
+
+for (i in (1:ncol(Crime)))
+ print(summary(Crime[,i]))
+
 
 ```
 
 b) [5 Pts] Calculate the mean,variance and standard deviation of probability of conviction (prbconv) by omitting the missing values, if any. 
 ```{r}
 #INSERT YOUR ANSWER HERE.
-
+mean(Crime$prbconv, na.rm = T)
+var(Crime$prbconv, na.rm = T)
+sd(Crime$prbconv, na.rm = T)
 ```
 c) [5 Pts] Use `lpolpc` (log-police per capita) and `smsa` variables to build a linear regression model to predict probability of conviction (prbconv).  And, compare with another linear regression model that uses `polpc` (police per capita) and `smsa`.
 
@@ -82,6 +95,7 @@ c) [5 Pts] Use `lpolpc` (log-police per capita) and `smsa` variables to build a 
    (Note: Full marks requires comment on the predictors)
 ```{r}
 #INSERT YOUR ANSWER HERE.
+
 
 ```
 
