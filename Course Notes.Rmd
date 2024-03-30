@@ -1441,7 +1441,7 @@ pnorm(35, mean = 30, sd = 3) - pnorm(30, mean = 30, sd = 3)
 rm(list = ls())
 ```
 
-rnorm() is used to select n random values from a normal distribution, n specifies the number of random selections you want.
+**rnorm()** is used to select n random values from a normal distribution, n specifies the number of random selections you want.
 
 
 # Week 9: Mar 14 - Mar 21
@@ -1508,7 +1508,7 @@ perm <- permutations(length(x), 2, x, repeats.allowed = TRUE)
 perm
 ```
 
-2. Use the row means() function to calculate the average of each possible pair in the previous step
+2. Use the **rowMeans()** function to calculate the average of each possible pair in the previous step
 ```{r}
 mean_perm <- rowMeans(perm)
 mean_perm
@@ -1528,6 +1528,10 @@ Binomial distribution will converge to a normal distribution with mean "np" and 
 Linear regression is an approach for modelling the relationship between a dependent variable and one or more independent variables. The case of more than one independent variable is called multiple linear regression.
 
 Rather than y = mx + b, in stats we use y = alpha + beta*x. It will still find the value of y when x is given to us.
+
+Simple LR: one x and one y
+
+Multiple LR: multiple x and one y
 
 ### Finding the line of best fit
 
@@ -1562,17 +1566,22 @@ $$
 ### Linear regression in R
 
 First, find any missing values in the dataset you are working with using the sum and which functions
-
-  sum(is.na(dataset$column)) -> gives number of na values within the column
-  which(is.na(dataset$column)) -> gives where the na value is in the column
+```{r}
+# sum(is.na(dataset$column)) -> gives number of na values within the column
+# which(is.na(dataset$column)) -> gives where the na value is in the column
+```
 
 Then, remove or replace the NA value(s) using na.omit and assigning to a new variable
 
-  new_dataset <- na.omit(dataset)
+```{r}
+# new_dataset <- na.omit(dataset)
+```
 
-Now, use the lm() function to perform linear regression on the columns you choose
+Now, use the **lm()** function to perform linear regression on the columns you choose
 
-  lm(column1(y) ~ column2(x), data = new_dataset)
+```{r}
+# lm(column1(y) ~ column2(x), data = new_dataset)
+```
   
 This function will give the coefficient and intercept, so you can then determine an expected y value given any x value
 
@@ -1599,18 +1608,18 @@ summary(lm(short.velocity ~ blood.glucose)) # shows more information about the l
 
 ### 6.2 residuals and fitted values
 
-The fitted() function gives the y values you would EXPECT given a x value from the dataset. This is what the value would be if on the line of best fit.
+The **fitted()** function gives the y values you would EXPECT given a x value from the dataset. This is what the value would be if on the line of best fit.
 
-The resid() function shows the difference between the fitted values and the observed values.
+The **resid()** function shows the difference between the fitted values and the observed values.
 
-To instantly get rid of any NA values that may be present when you're plotting out a data set, then the na.exclude() call can do that for you. I would prefer to use it as an option, but you can use it as an argument in lm() as well
+To instantly get rid of any NA values that may be present when you're plotting out a data set, then the **na.exclude()** call can do that for you. I would prefer to use it as an option, but you can use it as an argument in **lm()** as well
 
 ```{r}
 lm.velo <- lm(short.velocity ~ blood.glucose)
 lm.velo
 ```
 
-To create a plot that has a line of best fit AND the residuals going towards the line of best fit, use the segments() function to draw line segments. The arguments to pass will be endpoint coordinates in the order **(x1, y1, x2, y2, ..., xn, yn)**
+To create a plot that has a line of best fit AND the residuals going towards the line of best fit, use the **segments()** function to draw line segments. The arguments to pass will be endpoint coordinates in the order **(x1, y1, x2, y2, ..., xn, yn)**
 
 ```{r}
 segments(blood.glucose, fitted(lm.velo), blood.glucose, short.velocity)
@@ -1623,15 +1632,15 @@ Fitted lines have two uncertainty bands around them
 
   - Confidence bands - the narrow type - reflect uncertainty about the line itself. They will be narrowest at the mean, and then will diverge from there
   - Prediction bands - the wide type - reflect uncertainty about the future observations. They will capture most of the known observations to allow for more leeway for future observations. They approach the true line plus minus 2 standard deviations, which when set on a normal distribution with more observations, will include 95% of the observations. These limits are limited in that they rely on normally distributed errors and a constant variance, so they are not good for small samples in particular.
-    - Can be pulled using the predict() function, with the linear model as an argument
+    - Can be pulled using the **predict()** function, with the linear model as an argument
     - Additionally, arguments can be specifying if you want the new observations to be within the confidence bands or prediction bands
-      - predict(lm.velo, int="c"), predict(lm.velo, int="p")
+      - **predict(lm.velo, int="c"), predict(lm.velo, int="p")**
       
-It is possible to add prediction and confidence intervals to a scatterplot using matlines(), but there are a few caveats to take note of.
+It is possible to add prediction and confidence intervals to a scatter plot using **matlines()**, but there are a few caveats to take note of.
 
   - sometimes column values are in random order
-  - prediction limits extendd outside plot region
-  - matlines() command needs to be prevented from cycling through line styles and colours
+  - prediction limits extend outside plot region
+  - **matlines()** command needs to be prevented from cycling through line styles and colours
   
 The solution is to *predict in a new data frame* containing suitable x values
 ```{r}
@@ -1653,11 +1662,60 @@ r = \frac{\sum (x_i - \bar{x}) (y_i - \bar{y})} {\sqrt {\sum (x_i - \bar{x})^2 \
 $$
 where **r** is the empirical correlation coefficient. **|r|** will be less than 1 if there is a non-perfect linear relation between $$x_i$$ and $$y_i$$
 
-We can use the function cor() to compute the correlation between two or more vectors. You will need to pass a few extra arguments to avoid problems:
+We can use the function **cor()** to compute the correlation between two or more vectors. You will need to pass a few extra arguments to avoid problems:
 
-  - use = "complete.obs" allows you to only use complete parts of the vectors
+  - **use = "complete.obs"** allows you to only use complete parts of the vectors
   
 ```{r}
 cor(blood.glucose, short.velocity, use = "complete.obs")
 # 0.4167546
+```
+
+
+# Week 11: Mar 28 - April 3
+## Module 11: Correlation
+### Pearson correlation
+
+Pearson correlation:
+
+- Symmetric
+- Scale-invariant
+- Ranges from -1 to +1
+  - 0 means no linear relationship
+  - 1 means strong positive linear relationship
+  - (-1) means strong negative linear relationship
+$$
+r = \frac{S_{xy}}{\sqrt{S_{xx}S_{yy}}}
+$$
+
+$$
+S_{xy} = \sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y}) = (computing formula)\sum x_i y_i - \frac{(\sum x_i)(\sum y_i)}{n}
+$$
+
+$$
+s_{xx} = \sum (x_i - \bar{x})^2 = (computing formula)\sum_{i=1}^{n}x_i^2 - (\sum_{i=1}^{n}x_i^2)/n
+$$
+
+$$
+s_{yy} = \sum (y_i - \bar{y})^2 = (computing formula)\sum_{i=1}^{n}y_i^2 - (\sum_{i=1}^{n}y_i^2)/n
+$$
+
+### Pearson correlaiton in R
+
+```{r}
+attach(mtcars)
+str(mtcars)
+```
+
+```{r}
+# Test for correlation using the cor.test() function
+cor.test(mtcars$mpg, mtcars$disp)
+# which has a low p-value, making it significant, and a strong correlation of -0.84755
+# Also, there is a 95% confidence interval between -0.92 and -0.71, which shows there would be a strong negative linear relationship either way
+```
+
+```{r}
+# To show the correlation between the pair-wise combinations of the variables in the data set, use the cor() function
+cor(mtcars)
+# Any variable's correlation with itself will be 1
 ```
