@@ -95,6 +95,17 @@ c) [5 Pts] Use `lpolpc` (log-police per capita) and `smsa` variables to build a 
    (Note: Full marks requires comment on the predictors)
 ```{r}
 #INSERT YOUR ANSWER HERE.
+# SMSA is a factor that is either yes or no to if the individual lives in a standard metro statistical area
+crime1 <- lm(prbconv ~ lpolpc + smsa, data = Crime)
+summary(crime1)
+
+# P value in the summary is less than 0.05, which means it is significant. The log police per capita has a 1.2049 estimate against the probability of conviction, while the smsa has a -0.7827 estimate of slope against the probability of conviction. This seems to suggest that when there are more convictions made when the log police per capita is higher. Meanwhile, smsa's coefficient with the probability of conviction suggests that there may be other factors that should be pulled into consideration when evaluating probability of conviction in an urban or rural area. R squared is only 0.1391, which means the linear model may be a poor to moderate fit to the data.
+
+
+crime2 <- lm(prbconv ~ polpc + smsa, data = Crime)
+summary(crime2)
+
+# P value in this model is also below 0.05, which means it is significant. polpc has a much steeper relation with the probability of conviction than the first model, which suggests that it may be a better representation of how the probability of conviction increases when police per capita increases. It also has a similarly small value for smsa to probability of conviction, suggesting that smsa is not something that affects probability of conviction very much. Furthermore, the R squared of this model is 0.2053, suggesting a better fit of the linear model to the data.
 
 
 ```
@@ -102,6 +113,19 @@ c) [5 Pts] Use `lpolpc` (log-police per capita) and `smsa` variables to build a 
 d) [5 Pts] Based on the output of your model, predict the output for different factors of `smsa` when `polpc` is set to 0.0025. Use both the predict function and intercept and slope equations and compare the results. 
 ```{r}
 #INSERT YOUR ANSWER HERE.
+intercept <- 0.19444
+coefficient_polpc <- 278.52397
+smsacoefficientyes <- -0.44656
+
+
+
+data_predict <- data.frame(polpc = c(0.0025, 0.0025), smsa = factor(c("no", "yes"), levels = c("no", "yes")))
+
+predict_0.0025 <- predict(crime2, newdata = data_predict)
+predict_0.0025
+# Predicts the probability of conviction when polpc is set to 0.0025 for both smsa factors (2 = Yes and 1 = No)
+
+
 
 ```
 e) [5 Pts] Find Pearson correlation between probability of prison sentence `prbpris` and tax per capita `taxpc`; and also Pearson correlation between probability of conviction `prbconv` and probability of arrest `prbarr`. 
@@ -109,6 +133,11 @@ e) [5 Pts] Find Pearson correlation between probability of prison sentence `prbp
    [5 Pts] What conclusions can you draw? Write your reasons as comments.
 ```{r}
 #INSERT YOUR ANSWER HERE.
+cor.test(Crime$prbpris, Crime$taxpc)
+# There is a small negative linear relation between the probability of prison sentence and tax per capita, suggesting that the probability of a prison sentence goes down when the area the crime is in pays higher taxes per person. Additionally, the p-value is small, which supports a significant finding that is against the expected correlation of 0. However, this correlation is comparatively small, so the taxes per capita likely does not solely influence the probability of a prison sentence.
+
+cor.test(Crime$prbconv, Crime$prbarr)
+# There is a small correlation between probability of conviction and probability of arrest, which seems to suggest a minimal linear relation between the two. Furthermore, the p-value is rather large, which suggests this finding is not significant, again supporting that there is a minimal linear relation between the two variables. It appears that being arrested doesn't necessarily mean you will be convicted.
 ```
 
 f) [5 Pts] Display the correlation matrix of the variables: prbconv, prbpris, density, polpc. 
@@ -117,6 +146,10 @@ f) [5 Pts] Display the correlation matrix of the variables: prbconv, prbpris, de
    
 ```{r}
 #INSERT YOUR ANSWER HERE.
+cor_matrix <- data.frame(Crime$prbconv, Crime$prbpris, Crime$density, Crime$polpc)
+cor(cor_matrix)
+
+# There is a high positive correlation of police per capita and probability of conviction. This appears to suggest that if there are more police per capita, which means more possible authoritative eyes on crime, the more likely one is convicted. However, there is a distinction that this is not causation. the higher correlation is indicative of the more likely chance of being caught when there are more police in the area. Crime does NOT suddenly spike when police are present, nor are police more likely to convict if there are more of them.
 ```
 
 
@@ -137,13 +170,18 @@ str(airquality)
 a) [5 Pts] Plot a histogram to assess the normality of the `Ozone` variable, then explain why it does not appear normally distributed. 
 ```{r}
 #INSERT YOUR ANSWER HERE.
+hist(airquality$Ozone)
+
+# the ozone variable does not appear to be normally distributed. The mode, median, and mean do not appear to be centered. 
+
+# 
 ```
 
 b) [5 Pts] Create a boxplot that shows the distribution of `Ozone` in each month. Use different colors for each month. 
 
 ```{r}
 #INSERT YOUR ANSWER HERE.
-
+boxplot(airquality$Ozone ~ airquality$Month, ylab = "Ozone values", xlab = "Months of the year", main = "Ozone boxplots in months of the year", col = c("blue", "red", "green", "yellow", "purple"), na.rm = T)
 ```
 
 c) [5 Pts] Create a matrix of scatterplots of all the numeric variables in the `airquality` dataset (i.e. Ozone, Solar.R, Wind and Temp.)
@@ -151,7 +189,8 @@ c) [5 Pts] Create a matrix of scatterplots of all the numeric variables in the `
 
 ```{r}
 #INSERT YOUR ANSWER HERE.
-
+air <- subset(airquality, select = -c(Month, Day))
+pairs(air,labels = c("Ozone", " Solar.R", "Wind", "Temp"))
 ```
 
 
