@@ -205,7 +205,19 @@ Consider that We roll a die 10 times and we want to know the probability of gett
 a) [5 Pts] The Monte Carlo Method uses random numbers to simulate some process. Here the process is rolling a die 20 times. Assume the die is fair. What is the probability of success or getting an even number in rolling the die once?
 ```{r}
 #INSERT YOUR ANSWER HERE.
+dice <- function() {
+  roll <- sample(1:6, size = 1, replace = TRUE)
+  if (roll %% 2 == 0) {
+    return(1)
+  } else {
+    return(0)
+  }
+}
 
+results <- replicate(1000, dice())
+mean(results)
+
+# The probability of getting an even number is approximately 0.5
 ```
 
 
