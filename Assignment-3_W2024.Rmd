@@ -29,13 +29,11 @@ a) [5 Pts] Midterm and final grades of some students are given as c(87, 72, 80, 
 midterm <- c(87, 72, 80, 91, 85, 96, 40, 34, 61)
 final <- c(59, 68, 52, 62, 78, 70, 35, 28, 45)
 
+summary(lm(formula = midterm ~ final))
 plot(final, midterm)
-lm(formula = midterm ~ final)
-abline(lm(midterm  ~ final))
+abline(lm(midterm ~ final))
 
-# I think the linear relationship is reasonable here
-  # blah blah blah
-  # COME BACK TO THIS
+# I think the linear relationship is reasonable here. The p value is under 0.05, which means it is significant. Furthermore, the R squared is 0.7651, suggesting a good fit to the data. These two factors make me think that the linear relationship is present in this data set. Someone who does well on the midterm can expect to do well on the final too, providing they are at the same level of other factors not present in this data set.
 ```
 
 b) [5 Pts] Plot the final as a function of the midterm using a scatterplot and graph the least-square line in red color on the same plot. 
@@ -50,10 +48,9 @@ text(x = 60, y = 35, "final = 8.2940 + 0.6538midterm")
 c) [5 Pts] Use the regression line to predict the final grades when the midterm grades are 83 and 22. 
 ```{r}
 #INSERT YOUR ANSWER HERE.
-8.2940 + 0.6538*83 # 62.5594 final grade projected
-8.2940 + 0.6538*22 # 22.6776 final grade projected
+8.2940 + 0.6538*83 # 62.5594 projected final grade
+8.2940 + 0.6538*22 # 22.6776 projected final grade
 
-# COME BACK TO THIS QUESTION
 ```
 
 
@@ -124,9 +121,10 @@ data_predict <- data.frame(polpc = c(0.0025, 0.0025), smsa = factor(c("no", "yes
 predict_0.0025 <- predict(crime2, newdata = data_predict)
 predict_0.0025
 # Predicts the probability of conviction when polpc is set to 0.0025 for both smsa factors (2 = Yes and 1 = No)
+# No = 0.8907482
+# Yes = 0.4441882
 
-
-
+# It appears that raising the police per capita to 0.0025 does not have the greatest effect on the probability of conviction when the individual does not live in a standard metro statistical area. However, the probability of conviction changed from a negative to a positive slope, indicating that with more police per capita, you are more likely to be convicted if you are in a non-standard metro statistical area. Previously, it was thought that you were less likely to be convicted if you were in a non-standard metro statistical area.
 ```
 e) [5 Pts] Find Pearson correlation between probability of prison sentence `prbpris` and tax per capita `taxpc`; and also Pearson correlation between probability of conviction `prbconv` and probability of arrest `prbarr`. 
 
@@ -172,9 +170,8 @@ a) [5 Pts] Plot a histogram to assess the normality of the `Ozone` variable, the
 #INSERT YOUR ANSWER HERE.
 hist(airquality$Ozone)
 
-# the ozone variable does not appear to be normally distributed. The mode, median, and mean do not appear to be centered. 
+# the ozone variable does not appear to be normally distributed. The mode, median, and mean do not appear to be centered. Also, the distribution is not centered, something that is indicative of a normal distribution. 
 
-# 
 ```
 
 b) [5 Pts] Create a boxplot that shows the distribution of `Ozone` in each month. Use different colors for each month. 
@@ -224,21 +221,42 @@ mean(results)
 b) [10 Pts] Define a function named `one.trial`, that simulates a single round of rolling a die 20 times and returns true if the number of even numbers is > 5.
 ```{r}
 #INSERT YOUR ANSWER HERE.
+one.trial <- function() {
+  list_empty <- list()
+  for (i in 1:20) {
+    dice <- sample(1:6, size = 1, replace = TRUE)
+    if (dice %% 2 == 0) {
+      list_empty <- append(list_empty, TRUE)
+    } else {
+      list_empty <- append(list_empty, FALSE)
+    }
+  }
+  if (sum(unlist(list_empty)) > 5) {
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
+}
 
+one.trial()
 ```
 
 c) [5 pts] Repeat the function `one.trial` for `N = 100,000` times and sum up the outcomes and store the result in a variable named `desired.output`. Compute the probability of getting more than 5 times of even numbers by using relative frequency. 
 
 ```{r}
+desired.output <- replicate(100000, one.trial())
+mean(desired.output) # Since the output values are considered to be boolean, then the mean of them should give the probability of getting more than 5 even numbers within 20 trials. Similarly, you can also use sum then divide by 100,000.
 
-
+# Typically over 97%, in my run trials I got 0.97891, 0.97909, 0.97912, 0.97851
 ```
 
 d) [5 pts] Use the Binomial formula you learned before to calculate such probability and Compare it with the probability value obtained in part (c).
 
 ```{r}
 #INSERT YOUR ANSWER HERE.
+1- pbinom(5, 20, 0.5) # 0.9793053
 
+# Approximately the same. Especially across 100,000 iterations, it should converge to a similar value
 ```
 
 Congratulations! you have completed the first run of the Monte Carlo simulation. 
