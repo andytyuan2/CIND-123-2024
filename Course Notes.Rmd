@@ -1111,6 +1111,8 @@ marks(c(10, 1, -2, 124, 100))
 
   - Each outcome has the same probability
   - Histograms look like a straight, horizontal line
+  - *If someone arrives at 8 AM, what is the probability of waiting more than 3 minutes but getting on the bus before 8:05 AM? The probability is distributed uniformly between 2 and 7.*
+    - The probability of one minute is 1/(7-2), which is 1/5. So the probability of getting on a bus between 3 and 5 minutes is 0.4.
   
 2. Bernoulli distributions
 
@@ -1684,6 +1686,9 @@ Pearson correlation:
   - 0 means no linear relationship
   - 1 means strong positive linear relationship
   - (-1) means strong negative linear relationship
+- Sensitive to outliers
+  
+- Correlation does NOT measure the slope of the line, only if it is a line
 $$
 r = \frac{S_{xy}}{\sqrt{S_{xx}S_{yy}}}
 $$
@@ -1700,7 +1705,13 @@ $$
 s_{yy} = \sum (y_i - \bar{y})^2 = (computing formula)\sum_{i=1}^{n}y_i^2 - (\sum_{i=1}^{n}y_i^2)/n
 $$
 
-### Pearson correlaiton in R
+
+### Spearman correlation
+
+- increase in y by increase by x
+- monotonic relationship between the values: never increases or decreases
+
+### Pearson correlation in R
 
 ```{r}
 attach(mtcars)
@@ -1719,3 +1730,15 @@ cor.test(mtcars$mpg, mtcars$disp)
 cor(mtcars)
 # Any variable's correlation with itself will be 1
 ```
+
+
+
+# Week 12: review for exam
+
+Topics:
+
+- Discrete distributions
+- Continuous distributions
+- sampling, central limit theorem
+- linear regression
+- correlation
