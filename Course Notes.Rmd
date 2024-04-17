@@ -741,10 +741,16 @@ Eg, for a number k = 2, then the percent of measurements that will lie within 2 
     - 99.7% within 3 standard deviations
     
     
-#### The z-score
+#### The z score
 A way to find how far a data point is from the mean, described in terms of standard deviations
 $$ z-score = \frac{x - E[X]}{\sigma} $$
 A larger z-score denotes a higher possibility that the data point is an outlier in the data set since it is further away from the mean.
+
+If the sample size of **n** is given, then the z score can be written as:
+
+$$
+\frac{x-E[X]}{\sigma/\sqrt{n}}
+$$
 
 #### Percentiles
 Percentile shows the number of measurements above and below a certain data point
@@ -833,8 +839,11 @@ Which should be the same order as the actual calculated standard deviation
 - Correlation coefficient
 $$ r = s_{xy} / (s_xs_y) $$
   - Where the numerator is the covariance between x and y
+  
 $$ s_{xy} = \frac{\sum{(x_i - \bar{x})(y_i - \bar{y})}}{(n - 1)} $$
+
 or
+
 $$ s_{xy} = \frac{\sum x_iy_i - \frac{(\sum x_i)(\sum y_i)}{n}} {n-1} $$
 
 - The correlation is used to determine the emergence of a pattern in the data set
@@ -1103,6 +1112,8 @@ marks <- function(x){
 }
 marks(c(10, 1, -2, 124, 100))
 ```
+
+
 # Week 6: Feb 15-Feb 22
 ## Module 6
 ### Discrete distributions
@@ -1477,11 +1488,7 @@ Under general conditions, the sums and means of random samples of measurements d
 ## Reading chapter 7 beaver stats
 - Sampling distribution of the sample mean
 
-If a random sample of n measurements is selected from a population with mean mu and standard deviation sigma, the sampling distribution of the sample mean x bar will have mean mu and standard deviation
-
-$$ 
-\frac{\sigma}{\sqrt{n}}
-$$
+If a random sample of n measurements is selected from a large population with mean $\mu$ and standard deviation $\sigma$, the sampling distribution of the sample mean $\bar{x}$ will have mean $\mu$ and standard deviation $\frac{\sigma}{\sqrt{n}}$
 
 **The standard error** 
 
@@ -1592,6 +1599,7 @@ This function will give the coefficient and intercept, so you can then determine
 ### 6.1 simple linear regression
 
 ```{r}
+rm(list = ls())
 library(ISwR)
 attach(thuesen)
 ```
@@ -1624,7 +1632,7 @@ lm.velo
 To create a plot that has a line of best fit AND the residuals going towards the line of best fit, use the **segments()** function to draw line segments. The arguments to pass will be endpoint coordinates in the order **(x1, y1, x2, y2, ..., xn, yn)**
 
 ```{r}
-segments(blood.glucose, fitted(lm.velo), blood.glucose, short.velocity)
+# segments(blood.glucose, fitted(lm.velo), blood.glucose, short.velocity)
 ```
 
 
@@ -1725,10 +1733,21 @@ cor.test(mtcars$mpg, mtcars$disp)
 # Also, there is a 95% confidence interval between -0.92 and -0.71, which shows there would be a strong negative linear relationship either way
 ```
 
+- in cor.test, t is the t-test statistic, df is the degrees of freedom, and the p-value is the significance of the test
+  - t-test measures if there is a significant difference in the means of two groups
+  - degrees of freedom is the number of independent variables
+  - p-value is the significance of the test
+
 ```{r}
 # To show the correlation between the pair-wise combinations of the variables in the data set, use the cor() function
 cor(mtcars)
 # Any variable's correlation with itself will be 1
+```
+
+```{r}
+x <- c(1, 3, 5, 9, 15)
+y <- c(-1,-3,-6,-6,-25)
+cor(x,y)
 ```
 
 
